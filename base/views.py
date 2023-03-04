@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from .models import Room, Topic, Message, User
 from .forms import RoomForm, UserForm, MyUserCreationForm
+from django.shortcuts import get_object_or_404
 
 
 # Create your views here.
@@ -110,14 +111,33 @@ def room(request, pk):
 
 
 
+@login_required(login_url='login')
 def userProfile(request, pk):
     user = User.objects.get(id=pk)
     rooms = user.room_set.all()
     room_messages = user.message_set.all()
     topics = Topic.objects.all()
+    followers_count = user.followers.all().count()
+    is_following = user.followers.filter(id=request.user.id).exists()
+
+    if request.method == 'POST':
+        if 'follow' in request.POST:
+            user.followers.add(request.user)
+            user.follower_count += 1
+            user.save()
+            messages.success(request, 'You are now following ' + user.name)
+            is_following = True
+
+        elif 'unfollow' in request.POST:
+            user.followers.remove(request.user)
+            user.follower_count -= 1
+            user.save()
+            messages.success(request, 'You are no longer following ' + user.name)
+            is_following = False
 
     context = {'user': user, 'rooms': rooms,
-               'room_messages': room_messages, 'topics': topics}
+               'room_messages': room_messages, 'topics': topics,
+               'followers_count': followers_count, 'is_following': is_following}
     return render(request, 'base/profile.html', context)
 
     
@@ -215,3 +235,27 @@ def activityPage(request):
     room_messages = Message.objects.all()
     return render(request, 'base/activity.html', {'room_messages': room_messages})
 
+
+def followers(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    followers_count = user.followers.count()
+    context = {'user': user, 'followers_count': followers_count}
+    return render(request, 'profile.html', context)
+
+
+
+def follow_user(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    if request.user.is_authenticated:
+        user.followers.add(request.user)
+        user.follower_count = user.followers.all().count()
+        user.save()
+    return redirect('user-profile', pk=pk)
+
+def unfollow_user(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    if request.user.is_authenticated:
+        user.followers.remove(request.user)
+        user.follower_count = user.followers.all().count()
+        user.save()
+    return redirect('user-profile', pk=pk)

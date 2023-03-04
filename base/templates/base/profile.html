@@ -18,8 +18,23 @@
         <div class="profile__info">
           <h3>{{user.name}}</h3>
           <p>@{{user.username}}</p>
+          <p>Followers: {{user.followers.count}}</p>  
           {% if request.user == user %}
           <a href="{% url 'update-user' %}" class="btn btn--main btn--pill">Edit Profile</a>
+          {% endif %}
+          {% if request.user != user %}
+          {% if is_following %}
+            <form method="POST" action="{% url 'unfollow-user' pk=user.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn--pill btn--secondary" name="unfollow">Unfollow</button>
+            </form>
+            {% else %}
+            <form method="POST" action="{% url 'follow-user' pk=user.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn--pill btn--main" name="follow">Follow</button>
+            </form>
+        {% endif %}
+
           {% endif %}
         </div>
         <div class="profile__about">
@@ -47,4 +62,6 @@
     <!-- Activities End -->
   </div>
 </main>
+
+
 {% endblock content %}

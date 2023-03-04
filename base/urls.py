@@ -19,6 +19,10 @@ urlpatterns = [
     path('update-user/', views.updateUser, name="update-user"),
     
     
-     path('topics/', views.topicsPage, name="topics"),
-     path('activity/', views.activityPage, name="activity"),
+    path('topics/', views.topicsPage, name="topics"),
+    path('activity/', views.activityPage, name="activity"),
+     
+    path('follow-user/<str:pk>/', views.follow_user, name="follow-user"),
+    path('unfollow-user/<str:pk>/', views.unfollow_user, name="unfollow-user"),
+
 ]

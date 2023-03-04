@@ -11,6 +11,9 @@ class User(AbstractUser):
     bio = models.TextField(null=True)
 
     avatar = models.ImageField(null=True, default="avatar.svg")
+    
+    followers = models.ManyToManyField('self', related_name='following', blank=True)
+    follower_count = models.IntegerField(default=0)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -56,3 +59,6 @@ class Message(models.Model):
 
     def __str__(self):
         return self.body[0:50]
+    
+
+
