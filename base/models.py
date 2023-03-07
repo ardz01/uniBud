@@ -48,14 +48,21 @@ class Room(models.Model):
 
 
 class Message(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, blank=True)
+    recipient = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, blank=True, related_name="messages")
+    name = models.CharField(max_length=200, null=True, blank=True)
+    email = models.EmailField(max_length=200, null=True, blank=True)
+    subject = models.CharField(max_length=200, null=True, blank=True)
     body = models.TextField()
+    is_read = models.BooleanField(default=False, null=True)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
     
     class Meta:
-        ordering = ['-updated', '-created']
+        ordering = ['is_read', '-created']
 
     def __str__(self):
         return self.body[0:50]
