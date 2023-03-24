@@ -37,6 +37,9 @@ class Room(models.Model):
         User, related_name='participants', blank=True)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
+    upvotes = models.IntegerField(default=0)
+    upvoted_by = models.ManyToManyField(User, related_name='upvoted_rooms')
+   
 
 
     class Meta:
@@ -68,4 +71,7 @@ class Message(models.Model):
         return self.body[0:50]
     
 
-
+class UserRoomVote(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    voted_at = models.DateTimeField(auto_now_add=True)

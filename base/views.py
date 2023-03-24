@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
-from .models import Room, Topic, Message, User
-from .forms import RoomForm, UserForm, MyUserCreationForm, MessageForm
+from .models import Room, Topic, Message, User, UserRoomVote
+from .forms import RoomForm, UserForm, MyUserCreationForm, MessageForm, UpvoteForm
 from django.shortcuts import get_object_or_404
 
 
@@ -75,7 +75,7 @@ def home(request):
         Q(topic__name__icontains=q) |
         Q(name__icontains=q) |
         Q(description__icontains=q)
-    )
+    ).order_by('-upvotes')
 
 
     topics = Topic.objects.all()[0:5]
@@ -309,3 +309,21 @@ def createMessage(request, pk):
 
     context = {'recipient': recipient, 'form': form}
     return render(request, 'base/message_form.html', context)
+
+
+@login_required
+def upvote(request):
+    if request.method == "POST":
+        room_id = request.POST.get('room')
+        room = get_object_or_404(Room, id=room_id)
+
+        if request.user not in room.upvoted_by.all():
+            room.upvotes += 1
+            room.upvoted_by.add(request.user)
+            room.save()
+
+        return JsonResponse({'success': True, 'upvotes': room.upvotes})
+    else:
+        return JsonResponse({'success': False})
+
+

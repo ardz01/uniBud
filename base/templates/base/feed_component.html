@@ -9,6 +9,16 @@
         </a>
         <div class="roomListRoom__actions">
             <span>{{room.created|timesince}} ago</span>
+            <form class="upvote-form" method="POST" action="{% url 'upvote' %}">
+                {% csrf_token %}
+                <input type="hidden" name="room" value="{{ room.id }}">
+                <div class="upvote-container" style="cursor: pointer;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="upvote-icon">
+                        <path d="M12 2L2 22h20L12 2z"/>
+                    </svg>
+                    <span class="upvote-count">{{ room.upvotes }}</span>
+                </div>
+            </form>
         </div>
     </div>
     <div class="roomListRoom__content">
@@ -36,4 +46,38 @@
         <p class="roomListRoom__topic">{{room.topic.name}}</p>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const upvoteForms = document.querySelectorAll('.upvote-form');
+    
+        // Upvote event listener
+        upvoteForms.forEach(form => {
+            const upvoteContainer = form.querySelector('.upvote-container');
+    
+            upvoteContainer.addEventListener('click', (event) => {
+                event.preventDefault();
+    
+                const formData = new FormData(form);
+                fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+                    },
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        form.querySelector('.upvote-count').textContent = data.upvotes;
+                    }
+                });
+            });
+        });
+    
+        // Remove the downvote event listener
+    });
+    </script>
+    
+    
+    
 {% endfor %}
