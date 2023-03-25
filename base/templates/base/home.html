@@ -51,11 +51,20 @@
 
     </div>
     <!-- Room List End -->
-
-    <!-- Activities Start -->
-    {% include 'base/activity_component.html' %}
-
-    <!-- Activities End -->
+    
+    <!-- Top Hosts Start -->
+    <div style="background: rgba(0,0,0,0);" class="activities">
+      {% include 'base/top_host_component.html' %}
+      <!-- Top Hosts End -->
+  
+      <br> <!-- Add this line to create a gap -->
+  
+      <!-- Activities Start -->
+      {% include 'base/activity_component.html' %}
+  
+      <!-- Activities End -->
+  </div>
+  
   </div>
 </main>
 

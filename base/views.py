@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.contrib.auth import authenticate, login, logout
 from .models import Room, Topic, Message, User, UserRoomVote
 from .forms import RoomForm, UserForm, MyUserCreationForm, MessageForm, UpvoteForm
@@ -68,6 +68,7 @@ def registerPage(request):
     return render(request, 'base/login_register.html', {'form': form})
 
 
+
 def home(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
 
@@ -77,17 +78,24 @@ def home(request):
         Q(description__icontains=q)
     ).order_by('-upvotes')
 
-
     topics = Topic.objects.all()[0:5]
     room_count = rooms.count()
-    
-    room_messages = Message.objects.filter(Q(room__topic__name__icontains=q))
-    
+    top_host = User.objects.annotate(num_followers=Count('followers')).order_by('-num_followers')[:5]
 
+    if request.user.is_authenticated:
+        following_users = request.user.followers.all()
+        room_messages = Message.objects.filter(
+            Q(room__topic__name__icontains=q),
+            Q(user=request.user) | Q(user__in=following_users)
+        ).order_by('-created')[:5]
+    else:
+        room_messages = Message.objects.none()  # Return an empty queryset
 
     context = {'rooms': rooms, 'topics': topics, 
-               'room_count': room_count, 'room_messages': room_messages}
+               'room_count': room_count, 'room_messages': room_messages,
+               'top_host': top_host}
     return render(request, 'base/home.html', context)
+
 
 
 def access_code(request, pk):

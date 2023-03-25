@@ -1,0 +1,24 @@
+<div class="activities">
+    <div class="activities__header">
+      <h2>Top Hosts</h2>
+    </div>
+    {% for host in top_host %}
+      <div class="activities__box">
+        <div class="activities__boxHeader roomListRoom__header">
+          <div class="avatar avatar--small">
+            <img src="{{ host.avatar.url }}" />
+          </div>
+          <div class="top-host__details">
+            <a href="{% url 'user-profile' host.id %}">@{{ host.username }}</a>
+            <p>Followers: {{ host.num_followers }}</p>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>No top hosts found</p>
+    {% endfor %}
+  </div>
+  
+  
+  
+  
