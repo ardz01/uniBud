@@ -90,9 +90,30 @@ def home(request):
     return render(request, 'base/home.html', context)
 
 
+def access_code(request, pk):
+    room = Room.objects.get(id=pk)
+    if request.method == 'POST':
+        access_code = request.POST.get('access_code')
+        if room.access_code == access_code:
+            room.participants.add(request.user)  # Add this line
+            return redirect('room', pk=room.id)
+        else:
+            return render(request, 'base/access_code.html', {'room': room, 'error': 'Invalid access code'})
+    else:
+        return render(request, 'base/access_code.html', {'room': room})
+
+
+
+
+
+
 
 def room(request, pk):
     room = Room.objects.get(id=pk)
+
+    if room.is_private and request.user not in room.participants.all():
+        return redirect('access_code', pk=room.id)
+
     room_messages = room.message_set.all().order_by('created')
     participants = room.participants.all()
 
@@ -157,11 +178,14 @@ def createRoom(request):
             topic=topic,
             name=request.POST.get('name'),
             description=request.POST.get('description'),
+            is_private=request.POST.get('is_private') == 'on',
+            access_code=request.POST.get('access_code'),
         )
         return redirect('home')
 
     context = {'form': form, 'topics': topics}
     return render(request, 'base/room_form.html', context)
+
 
 
 

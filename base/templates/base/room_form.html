@@ -44,6 +44,16 @@
             {{form.description}}
           </div>
 
+          <div class="form__group">
+            <label for="{{ form.is_private.id_for_label }}">Private Room:</label>
+            {{ form.is_private }}
+        </div>
+        
+        <div class="form__group">
+            <label for="{{ form.access_code.id_for_label }}">Access Code (optional for private rooms):</label>
+            {{ form.access_code }}
+        </div>
+
           <!-- <div class="form__group">
             <label for="room_topic">Topic</label>
             <input required type="text" name="topic" id="room_topic" list="topic-list" />

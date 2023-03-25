@@ -29,4 +29,5 @@ urlpatterns = [
     path('message/<str:pk>/', views.viewMessage, name="message"),
     path('create-message/<str:pk>/', views.createMessage, name="create-message"),
     path('upvote/', views.upvote, name='upvote'),
+    path('room/<int:pk>/access_code/', views.access_code, name='access_code'),
 ]

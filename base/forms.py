@@ -15,6 +15,12 @@ class RoomForm(ModelForm):
         fields = '__all__'
         exclude = ['host', 'participants']
         
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['access_code'].required = False
+        
+
+        
         
 class UserForm(ModelForm):
     class Meta:

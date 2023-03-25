@@ -39,7 +39,9 @@ class Room(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     upvotes = models.IntegerField(default=0)
     upvoted_by = models.ManyToManyField(User, related_name='upvoted_rooms')
-   
+    is_private = models.BooleanField(default=False)
+    access_code = models.CharField(max_length=10, blank=True, null=True)
+    
 
 
     class Meta:
