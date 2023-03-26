@@ -211,13 +211,17 @@ def updateRoom(request, pk):
         room.name = request.POST.get('name')
         room.topic = topic
         room.description = request.POST.get('description')
-        room.is_private=request.POST.get('is_private') == 'on'
-        room.access_code=request.POST.get('access_code')
+        room.is_private = request.POST.get('is_private') == 'on'
+        new_access_code = request.POST.get('access_code')
+        if room.is_private and new_access_code != room.access_code:
+            room.access_code = new_access_code
         room.save()
         return redirect('home')
 
     context = {'form': form, 'topics': topics, 'room': room}
     return render(request, 'base/room_form.html', context)
+
+
      
 
 @login_required
