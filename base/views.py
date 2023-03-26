@@ -211,6 +211,8 @@ def updateRoom(request, pk):
         room.name = request.POST.get('name')
         room.topic = topic
         room.description = request.POST.get('description')
+        room.is_private=request.POST.get('is_private') == 'on'
+        room.access_code=request.POST.get('access_code')
         room.save()
         return redirect('home')
 
