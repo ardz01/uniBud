@@ -24,7 +24,9 @@ urlpatterns = [
      
     path('follow-user/<str:pk>/', views.follow_user, name="follow-user"),
     path('unfollow-user/<str:pk>/', views.unfollow_user, name="unfollow-user"),
-
+    path('follower_list/', views.follower_list, name='follower_list'),
+    path('follower_list/<int:pk>/', views.follower_list, name='follower_list'),
+    
     path('inbox/', views.inbox, name="inbox"),
     path('message/<str:pk>/', views.viewMessage, name="message"),
     path('create-message/<str:pk>/', views.createMessage, name="create-message"),
@@ -34,4 +36,5 @@ urlpatterns = [
     path('room/<int:room_id>/kick-out/<int:user_id>/', views.kick_out_user, name='kick-out-user'),
     path('room/<int:room_id>/make-admin/<int:user_id>/', views.make_user_admin, name='make-user-admin'),
     path('room/<int:room_id>/un-admin/<int:user_id>/', views.unadmin_user, name='unadmin-user'),
+    
 ]

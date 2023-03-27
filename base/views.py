@@ -284,20 +284,35 @@ def followers(request, pk):
 
 
 def follow_user(request, pk):
-    user = get_object_or_404(User, pk=pk)
+    user_to_follow = get_object_or_404(User, pk=pk)
     if request.user.is_authenticated:
-        user.followers.add(request.user)
-        user.follower_count = user.followers.all().count()
-        user.save()
+        request.user.following.add(user_to_follow)
+        user_to_follow.follower_count = user_to_follow.followers.all().count()
+        user_to_follow.save()
     return redirect('user-profile', pk=pk)
 
 def unfollow_user(request, pk):
-    user = get_object_or_404(User, pk=pk)
+    user_to_unfollow = get_object_or_404(User, pk=pk)
     if request.user.is_authenticated:
-        user.followers.remove(request.user)
-        user.follower_count = user.followers.all().count()
-        user.save()
+        request.user.following.remove(user_to_unfollow)
+        user_to_unfollow.follower_count = user_to_unfollow.followers.all().count()
+        user_to_unfollow.save()
     return redirect('user-profile', pk=pk)
+
+
+def follower_list(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    following = user.following.all() 
+    followers = [follower for follower in User.objects.all() if user in follower.following.all()]
+    context = {
+        'user': user,
+        'following': following,
+        'followers': followers,
+    }
+    return render(request, 'base/follower_list.html', context)
+
+
+
 
 
 

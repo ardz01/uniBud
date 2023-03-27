@@ -1,0 +1,45 @@
+{% extends 'main.html' %}
+
+{% block content %}
+  <main class="layout">
+    <div class="container">
+      <div class="layout__box">
+        <div class="layout__boxHeader">
+          <div class="layout__boxTitle">
+            <a href="{{request.META.HTTP_REFERER}}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <g> <path fill="none" d="M0 0h24v24H0z"/> 
+                    <path d="M13 14.062V22H4a8 8 0 0 1 9-7.938zM12 13c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6zm5.793 6.914l3.535-3.535 1.415 1.414-4.95 4.95-3.536-3.536 1.415-1.414 2.12 2.121z"/> </g> 
+                </svg>
+            </a>
+            <h3>{{ user.username }}'s Followers and Following</h3>
+          </div>
+        </div>
+        <div class="container">
+          <div class="lists" style="display: flex; justify-content: space-around;">
+            <div class="following">
+              <h2>Following</h2>
+              <ul>
+                {% for user in following %}
+                  <li>
+                    <a href="{% url 'user-profile' user.id %}">{{ user.username }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+
+            <div class="followers">
+              <h2>Followers</h2>
+              <ul>
+                {% for user in followers %}
+                  <li>
+                    <a href="{% url 'user-profile' user.id %}">{{ user.username }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock %}

@@ -12,7 +12,7 @@ class User(AbstractUser):
 
     avatar = models.ImageField(null=True, default="avatar.svg")
     
-    followers = models.ManyToManyField('self', related_name='following', blank=True)
+    followers = models.ManyToManyField('self', related_name='following', blank=True, symmetrical=False)
     follower_count = models.IntegerField(default=0)
 
     USERNAME_FIELD = 'email'
