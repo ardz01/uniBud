@@ -393,3 +393,21 @@ def make_user_admin(request, room_id, user_id):
     room.save()
 
     return redirect('room', pk=room.id)  # Redirect back to the room page
+
+
+@login_required
+def unadmin_user(request, room_id, user_id):
+    room = get_object_or_404(Room, pk=room_id)
+    user = get_object_or_404(User, pk=user_id)
+
+    if request.user != room.host and not request.user in room.admins.all():
+        # Return an error message if the current user is not the room host or an admin
+        messages.error(request, "You don't have permission to un-admin a user.")
+        return redirect('room', room_id)
+
+    # Remove the user from the admin group
+    room.admins.remove(user)
+    room.save()
+
+    messages.success(request, f"{user.username} has been removed as an admin.")
+    return redirect('room', room_id)

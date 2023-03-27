@@ -1190,6 +1190,10 @@ a {
 
 .dropdown-container {
   position: relative;
+  display: none;
+}
+
+.participant:hover .dropdown-container {
   display: inline-block;
 }
 
@@ -1205,6 +1209,10 @@ a {
 
 .admin-icon {
   display: none;
+}
+
+.admin-icon:hover {
+  cursor: pointer;
 }
 
 .show-icon {
