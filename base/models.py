@@ -41,7 +41,7 @@ class Room(models.Model):
     upvoted_by = models.ManyToManyField(User, related_name='upvoted_rooms')
     is_private = models.BooleanField(default=False)
     access_code = models.CharField(max_length=10, blank=True, null=True)
-    
+    admins = models.ManyToManyField(User, related_name="admin_rooms", blank=True)
 
 
     class Meta:

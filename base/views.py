@@ -124,6 +124,7 @@ def room(request, pk):
 
     room_messages = room.message_set.all().order_by('created')
     participants = room.participants.all()
+    is_admin = request.user in room.admins.all()
 
     if request.method == 'POST':
         message = Message.objects.create(
@@ -135,7 +136,7 @@ def room(request, pk):
         return redirect('room', pk=room.id)
 
     context = {'room': room, 'room_messages': room_messages,
-               'participants': participants}
+               'participants': participants, 'is_admin': is_admin,}
     return render(request, 'base/room.html', context)
 
 
@@ -371,7 +372,24 @@ def kick_out_user(request, room_id, user_id):
     room = get_object_or_404(Room, id=room_id)
     user = get_object_or_404(User, id=user_id)
 
-    if request.user == room.host and request.user != user:
+    # Check if the request.user is an admin of the room
+    is_admin = request.user in room.admins.all() or request.user == room.host
+    if is_admin and request.user != user:
         room.participants.remove(user)
 
     return redirect('room', pk=room.id)
+
+
+
+def make_user_admin(request, room_id, user_id):
+    room = get_object_or_404(Room, id=room_id)
+    user = get_object_or_404(User, id=user_id)
+    
+    # Check if the request.user is the host of the room
+    if request.user != room.host:
+        return redirect('room', pk=room.id)  # Redirect back to the room if not the host
+
+    room.admins.add(user)  # Add the user to the room's admins
+    room.save()
+
+    return redirect('room', pk=room.id)  # Redirect back to the room page

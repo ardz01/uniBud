@@ -134,7 +134,7 @@
             {{user.username}}
             <span>@{{user.username}}</span>
           </p>
-          {% if room.host == request.user %}
+          {% if room.host == request.user or is_admin %}
           <div class="dropdown-container">
             <button class="dropdown-button">
               <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 32 32">
@@ -142,7 +142,11 @@
                 <path d="M16 21l-13-13h-3l16 16 16-16h-3l-13 13z"></path>
               </svg>
             </button>
-            <svg class="kick-out" data-user-id="{{ user.id }}" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hammer" viewBox="0 0 16 16">
+            {% if room.host == request.user %}
+            <svg class="make-admin admin-icon" data-user-id="{{ user.id }}" xxmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M17,11c0.34,0,0.67,0.04,1,0.09V6.27L10.5,3L3,6.27v4.91c0,4.54,3.2,8.79,7.5,9.82c0.55-0.13,1.08-0.32,1.6-0.55 C11.41,19.47,11,18.28,11,17C11,13.69,13.69,11,17,11z"/>
+              <path d="M17,13c-2.21,0-4,1.79-4,4c0,2.21,1.79,4,4,4s4-1.79,4-4C21,14.79,19.21,13,17,13z M17,14.38c0.62,0,1.12,0.51,1.12,1.12 s-0.51,1.12-1.12,1.12s-1.12-0.51-1.12-1.12S16.38,14.38,17,14.38z M17,19.75c-0.93,0-1.74-0.46-2.24-1.17 c0.05-0.72,1.51-1.08,2.24-1.08s2.19,0.36,2.24,1.08C18.74,19.29,17.93,19.75,17,19.75z"/></svg>
+            {% endif %}
+            <svg class="kick-out admin-icon" data-user-id="{{ user.id }}" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hammer" viewBox="0 0 16 16">
               <path d="M9.972 2.508a.5.5 0 0 0-.16-.556l-.178-.129a5.009 5.009 0 0 0-2.076-.783C6.215.862 4.504 1.229 2.84 3.133H1.786a.5.5 0 0 0-.354.147L.146 4.567a.5.5 0 0 0 0 .706l2.571 2.579a.5.5 0 0 0 .708 0l1.286-1.29a.5.5 0 0 0 .146-.353V5.57l8.387 8.873A.5.5 0 0 0 14 14.5l1.5-1.5a.5.5 0 0 0 .017-.689l-9.129-8.63c.747-.456 1.772-.839 3.112-.839a.5.5 0 0 0 .472-.334z"/>
             </svg>
           </div>
@@ -165,18 +169,14 @@ document.querySelectorAll('.dropdown-button').forEach((button) => {
     event.preventDefault();
     event.stopPropagation();
 
-    // Hide all kick-out icons
-    document.querySelectorAll('.kick-out').forEach((kickOutIcon) => {
-      kickOutIcon.style.display = 'none';
+    // Toggle the 'show-icon' class for the clicked dropdown button
+    const adminIcons = event.target.closest('.participant').querySelectorAll('.admin-icon');
+    adminIcons.forEach((icon) => {
+      icon.classList.toggle('show-icon');
     });
-
-    // Show the kick-out icon for the clicked dropdown button
-    const kickOutIcon = event.target.closest('.participant').querySelector('.kick-out');
-    if (kickOutIcon) {
-      kickOutIcon.style.display = 'inline-block';
-    }
   });
 });
+
 
 document.querySelectorAll('.kick-out').forEach((icon) => {
   icon.addEventListener('click', (event) => {
@@ -187,6 +187,17 @@ document.querySelectorAll('.kick-out').forEach((icon) => {
     location.href = `/room/${roomId}/kick-out/${userId}/`;
   });
 });
+
+document.querySelectorAll('.make-admin').forEach((icon) => {
+  icon.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const userId = event.target.closest('.make-admin').dataset.userId;
+    const roomId = document.querySelector('.participants__list').dataset.roomId;
+    location.href = `/room/${roomId}/make-admin/${userId}/`;
+  });
+});
+
 
 
 </script>

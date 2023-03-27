@@ -1195,7 +1195,12 @@ a {
   z-index: 1;
 }
 
-.dropdown-container:hover .kick-out {
-  display: block;
+
+
+.admin-icon {
+  display: none;
 }
 
+.show-icon {
+  display: inline-block !important;
+}
