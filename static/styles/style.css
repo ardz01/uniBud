@@ -1165,6 +1165,9 @@ a {
   font-weight: 1.4rem;
 }
 
+/*==============================
+=>  Notification
+================================*/
 .notification-dot {
   display: inline-block;
   position: relative;
@@ -1176,6 +1179,9 @@ a {
   border-radius: 50%;
 }
 
+/*==============================
+=>  Admin
+================================*/
 
 .kick-out {
   display: none;
@@ -1203,4 +1209,19 @@ a {
 
 .show-icon {
   display: inline-block !important;
+}
+
+
+.role-title {
+  font-weight: bold;
+  margin-top: 1rem;
+}
+.owner-title {
+  color: #f44336; /* red */
+}
+.admin-title {
+  color: #4caf50; /* green */
+}
+.member-title {
+  color: #2196f3; /* blue */
 }

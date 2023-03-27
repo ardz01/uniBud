@@ -125,15 +125,38 @@
     <div class="participants">
       <h3 class="participants__top">Participants <span>({{participants.count}} Joined)</span></h3>
       <div class="participants__list scroll" data-room-id="{{ room.id }}">
+        <h4 class="role-title owner-title">Owner</h4>
+        <div class="owner">
+          <!-- The room owner will be added here -->
+        </div>
+    
+        <h4 class="role-title admin-title">Admins</h4>
+        <div class="admins">
+          <!-- Admin users will be added here -->
+        </div>
+    
+        <h4 class="role-title member-title">Members</h4>
+        <div class="members">
+          <!-- Normal participants will be added here -->
+        </div>
+    
         {% for user in participants %}
-        <a href="{%  url 'user-profile' user.id %}" class="participant">
-          <div class="avatar avatar--medium">
-            <img src="{{user.avatar.url}}" />
-          </div>
-          <p>
-            {{user.username}}
-            <span>@{{user.username}}</span>
-          </p>
+          {% if user == room.host %}
+            <div class="participant owner">
+          {% elif user in room.admins.all %}
+            <div class="participant admin">
+          {% else %}
+            <div class="participant member">
+          {% endif %}
+              <a href="{%  url 'user-profile' user.id %}">
+                <div class="avatar avatar--medium">
+                  <img src="{{user.avatar.url}}" />
+                </div>
+                <p>
+                  {{user.username}}
+                  <span>@{{user.username}}</span>
+                </p>
+              </a>
           {% if room.host == request.user or is_admin %}
           <div class="dropdown-container">
             <button class="dropdown-button">
@@ -198,7 +221,16 @@ document.querySelectorAll('.make-admin').forEach((icon) => {
   });
 });
 
-
+// Move participants to the correct divs based on their roles
+document.querySelectorAll('.participant').forEach((participant) => {
+  if (participant.classList.contains('owner')) {
+    document.querySelector('.owner').appendChild(participant);
+  } else if (participant.classList.contains('admin')) {
+    document.querySelector('.admins').appendChild(participant);
+  } else {
+    document.querySelector('.members').appendChild(participant);
+  }
+})
 
 </script>
 <script src="script.js"></script>
