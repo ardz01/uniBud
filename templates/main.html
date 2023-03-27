@@ -12,8 +12,9 @@
 
   
   <body>
-    
+    {% block navbar %}
     {% include 'navbar.html' %}
+    {% endblock navbar %}
 
     {% if messages %}
     <ul class="messages">
