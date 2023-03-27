@@ -124,7 +124,7 @@
     <!--   Start -->
     <div class="participants">
       <h3 class="participants__top">Participants <span>({{participants.count}} Joined)</span></h3>
-      <div class="participants__list scroll">
+      <div class="participants__list scroll" data-room-id="{{ room.id }}">
         {% for user in participants %}
         <a href="{%  url 'user-profile' user.id %}" class="participant">
           <div class="avatar avatar--medium">
@@ -134,12 +134,61 @@
             {{user.username}}
             <span>@{{user.username}}</span>
           </p>
+          {% if room.host == request.user %}
+          <div class="dropdown-container">
+            <button class="dropdown-button">
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 32 32">
+                <title>chevron-down</title>
+                <path d="M16 21l-13-13h-3l16 16 16-16h-3l-13 13z"></path>
+              </svg>
+            </button>
+            <svg class="kick-out" data-user-id="{{ user.id }}" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hammer" viewBox="0 0 16 16">
+              <path d="M9.972 2.508a.5.5 0 0 0-.16-.556l-.178-.129a5.009 5.009 0 0 0-2.076-.783C6.215.862 4.504 1.229 2.84 3.133H1.786a.5.5 0 0 0-.354.147L.146 4.567a.5.5 0 0 0 0 .706l2.571 2.579a.5.5 0 0 0 .708 0l1.286-1.29a.5.5 0 0 0 .146-.353V5.57l8.387 8.873A.5.5 0 0 0 14 14.5l1.5-1.5a.5.5 0 0 0 .017-.689l-9.129-8.63c.747-.456 1.772-.839 3.112-.839a.5.5 0 0 0 .472-.334z"/>
+            </svg>
+          </div>
+          {% endif %}
         </a>
         {% endfor %}
+        
+
+        
+
+
       </div>
     </div>
     <!--  End -->
   </div>
 </main>
+<script>
+document.querySelectorAll('.dropdown-button').forEach((button) => {
+  button.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    // Hide all kick-out icons
+    document.querySelectorAll('.kick-out').forEach((kickOutIcon) => {
+      kickOutIcon.style.display = 'none';
+    });
+
+    // Show the kick-out icon for the clicked dropdown button
+    const kickOutIcon = event.target.closest('.participant').querySelector('.kick-out');
+    if (kickOutIcon) {
+      kickOutIcon.style.display = 'inline-block';
+    }
+  });
+});
+
+document.querySelectorAll('.kick-out').forEach((icon) => {
+  icon.addEventListener('click', (event) => {
+    event.preventDefault(); // Prevent the default behavior
+    event.stopPropagation(); // Prevent the click event from propagating to the participant element
+    const userId = event.target.closest('.kick-out').dataset.userId;
+    const roomId = document.querySelector('.participants__list').dataset.roomId;
+    location.href = `/room/${roomId}/kick-out/${userId}/`;
+  });
+});
+
+
+</script>
 <script src="script.js"></script>
 {% endblock content %}

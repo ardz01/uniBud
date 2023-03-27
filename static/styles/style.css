@@ -1176,3 +1176,26 @@ a {
   border-radius: 50%;
 }
 
+
+.kick-out {
+  display: none;
+}
+
+
+.dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
+.kick-out {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  z-index: 1;
+}
+
+.dropdown-container:hover .kick-out {
+  display: block;
+}
+

@@ -365,3 +365,13 @@ def upvote(request):
         return JsonResponse({'success': False})
 
 
+
+@login_required
+def kick_out_user(request, room_id, user_id):
+    room = get_object_or_404(Room, id=room_id)
+    user = get_object_or_404(User, id=user_id)
+
+    if request.user == room.host and request.user != user:
+        room.participants.remove(user)
+
+    return redirect('room', pk=room.id)

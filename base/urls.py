@@ -31,4 +31,5 @@ urlpatterns = [
     path('upvote/', views.upvote, name='upvote'),
     path('room/<int:pk>/access_code/', views.access_code, name='access_code'),
     
+    path('room/<int:room_id>/kick-out/<int:user_id>/', views.kick_out_user, name='kick-out-user'),
 ]
