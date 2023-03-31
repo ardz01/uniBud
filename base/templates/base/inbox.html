@@ -9,7 +9,7 @@
   }
   .inbox {
     flex: 1;
-    border-right: 1px solid #e0e0e0;
+    border-right: 1px solid #6e6a6a;
     padding-right: 20px;
   }
   .message-view {
@@ -36,27 +36,42 @@
   }
 </style>
 
-<!-- Main Section -->
 <main class="create-room layout">
   <div class="container">
-    <div class="inbox-container">
-      <div class="inbox">
-        <ul class="messages">
-          {% for message in messageRequests %}
-          {% if message.is_read == False %}
-          <li class="message message--unread" data-message-id="{{message.id}}">
-            {% else %}
-          <li class="message" data-message-id="{{message.id}}">
-            {% endif %}
-            <img class="message__avatar" src="{{message.user.avatar.url}}" alt="{{message.user.username}}'s avatar">
-            <span class="message__author">{{message.name}}</span>
-            <span class="message__subject">{{message.subject}}</span>
-          </li>
-          {% endfor %}
-        </ul>
+    <div class="layout__box">
+      <div class="layout__boxHeader">
+        <div class="layout__boxTitle">
+          <a href="{% url 'home' %}">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+              <title>arrow-left</title>
+              <path
+                d="M13.723 2.286l-13.723 13.714 13.719 13.714 1.616-1.611-10.96-10.96h27.625v-2.286h-27.625l10.965-10.965-1.616-1.607z">
+              </path>
+            </svg>
+          </a>
+          <h3>Inbox</h3>
+        </div>
       </div>
-      <div class="message-view message-view-top">
-        <!-- Message view will be updated here -->
+
+      <div class="inbox-container layout__body">
+        <div class="inbox">
+          <ul class="messages">
+            {% for message in messageRequests %}
+            {% if message.is_read == False %}
+            <li class="message message--unread" data-message-id="{{message.id}}">
+              {% else %}
+            <li class="message" data-message-id="{{message.id}}">
+              {% endif %}
+              <img class="message__avatar" src="{{message.user.avatar.url}}" alt="{{message.user.username}}'s avatar">
+              <span class="message__author">{{message.name}}</span>
+              <span class="message__subject">{{message.subject}}</span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="message-view message-view-top">
+          <!-- Message view will be updated here -->
+        </div>
       </div>
     </div>
   </div>
