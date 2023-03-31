@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from .models import Room, Topic, Message, User, UserRoomVote, Notification
 from .forms import RoomForm, UserForm, MyUserCreationForm, MessageForm, UpvoteForm
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
 
 
 # Create your views here.
@@ -316,11 +317,22 @@ def follower_list(request, pk):
 
 
 def get_notifications(request):
-    notifications = Notification.objects.filter(receiver=request.user, is_read=False).order_by('-created_at')
-    for notification in notifications:
-        notification.is_read = True
-        notification.save()
+    user = request.user
+    notifications = Notification.objects.filter(receiver=request.user).order_by('-created_at')
+    user.last_checked = timezone.now()
+    user.save()
     return render(request, 'base/notifications.html', {'notifications': notifications})
+
+
+def delete_notification(request, notification_id):
+    notification = Notification.objects.filter(id=notification_id, receiver=request.user).first()
+    if notification:
+        notification.delete()
+    return redirect('get_notifications')
+
+
+
+
 
 
 @login_required(login_url='login')

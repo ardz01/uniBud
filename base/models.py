@@ -14,6 +14,7 @@ class User(AbstractUser):
     
     followers = models.ManyToManyField('self', related_name='following', blank=True, symmetrical=False)
     follower_count = models.IntegerField(default=0)
+    last_checked = models.DateTimeField(auto_now_add=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

@@ -38,5 +38,6 @@ urlpatterns = [
     path('room/<int:room_id>/un-admin/<int:user_id>/', views.unadmin_user, name='unadmin-user'),
 
     path('get_notifications/', views.get_notifications, name='get_notifications'),
+    path('delete_notification/<int:notification_id>/', views.delete_notification, name='delete_notification'),
     
 ]

@@ -5,4 +5,5 @@ register = template.Library()
 
 @register.simple_tag
 def unread_notifications_count(user):
-    return Notification.objects.filter(receiver=user, is_read=False).count()
+    last_checked = user.last_checked
+    return Notification.objects.filter(receiver=user, created_at__gt=last_checked).count()
