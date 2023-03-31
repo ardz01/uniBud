@@ -36,5 +36,7 @@ urlpatterns = [
     path('room/<int:room_id>/kick-out/<int:user_id>/', views.kick_out_user, name='kick-out-user'),
     path('room/<int:room_id>/make-admin/<int:user_id>/', views.make_user_admin, name='make-user-admin'),
     path('room/<int:room_id>/un-admin/<int:user_id>/', views.unadmin_user, name='unadmin-user'),
+
+    path('get_notifications/', views.get_notifications, name='get_notifications'),
     
 ]

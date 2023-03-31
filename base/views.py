@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q, Count
 from django.contrib.auth import authenticate, login, logout
-from .models import Room, Topic, Message, User, UserRoomVote
+from .models import Room, Topic, Message, User, UserRoomVote, Notification
 from .forms import RoomForm, UserForm, MyUserCreationForm, MessageForm, UpvoteForm
 from django.shortcuts import get_object_or_404
 
@@ -289,6 +289,8 @@ def follow_user(request, pk):
         request.user.following.add(user_to_follow)
         user_to_follow.follower_count = user_to_follow.followers.all().count()
         user_to_follow.save()
+        notification = Notification(sender=request.user, receiver=user_to_follow, notification_type='follow')
+        notification.save()
     return redirect('user-profile', pk=pk)
 
 def unfollow_user(request, pk):
@@ -313,7 +315,12 @@ def follower_list(request, pk):
 
 
 
-
+def get_notifications(request):
+    notifications = Notification.objects.filter(receiver=request.user, is_read=False).order_by('-created_at')
+    for notification in notifications:
+        notification.is_read = True
+        notification.save()
+    return render(request, 'base/notifications.html', {'notifications': notifications})
 
 
 @login_required(login_url='login')
