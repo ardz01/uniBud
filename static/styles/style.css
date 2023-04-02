@@ -1236,3 +1236,33 @@ a {
 
 
 
+
+
+.chatbot-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #b1162b;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+
+.chatbot {
+  position: fixed;
+  right: 20px;
+  bottom: 80px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  width: 300px;
+  display: none; /* Initially hidden */
+  z-index: 1000;
+}
