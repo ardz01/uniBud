@@ -5,6 +5,24 @@ document.addEventListener('DOMContentLoaded', function () {
     const chatbotIcon = document.querySelector('.chatbot-icon');
     const chatbot = document.querySelector('.chatbot');
 
+    function createBotMessage(text) {
+        const botMessage = document.createElement('div');
+        botMessage.textContent = text;
+        botMessage.className = 'bot-message';
+        chatbotOutput.appendChild(botMessage);
+    }
+    
+    chatbotIcon.addEventListener('click', function () {
+        if (chatbot.style.display === 'none') {
+          chatbot.style.display = 'flex';
+          if (!chatbotOutput.hasChildNodes()) {
+            createBotMessage('Hi, how may I help you today?');
+          }
+        } else {
+          chatbot.style.display = 'none';
+        }
+    });
+
     chatbotForm.addEventListener('submit', async function (event) {
         event.preventDefault();
         const question = chatbotInput.value;
@@ -22,13 +40,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Clear the input after sending a message
         chatbotInput.value = "";
-    });
-
-    chatbotIcon.addEventListener('click', function () {
-        if (chatbot.style.display === 'none') {
-            chatbot.style.display = 'flex';
-        } else {
-            chatbot.style.display = 'none';
-        }
     });
 });
