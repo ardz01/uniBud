@@ -1,18 +1,4 @@
-function handleFormSubmit(event) {
-    event.preventDefault();
-  
-    const chatbotInput = document.getElementById("chatbot-input");
-    const chatbotOutput = document.getElementById("chatbot-output");
-    const question = chatbotInput.value;
-  
-    fetch(`/chatbot/ask/?question=${question}`)
-      .then((response) => response.json())
-      .then((data) => {
-        chatbotOutput.textContent = data.answer;
-      });
-  }
-  
-  document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
     const chatbotForm = document.getElementById('chatbot-form');
     const chatbotInput = document.getElementById('chatbot-input');
     const chatbotOutput = document.getElementById('chatbot-output');
@@ -24,16 +10,25 @@ function handleFormSubmit(event) {
         const question = chatbotInput.value;
         const response = await fetch(`/chatbot/ask/?question=${question}`);
         const data = await response.json();
-        chatbotOutput.textContent = data.answer;
+        const userMessage = document.createElement('div');
+        userMessage.textContent = question;
+        userMessage.className = 'user-message';
+        chatbotOutput.appendChild(userMessage);
+
+        const botMessage = document.createElement('div');
+        botMessage.textContent = data.answer;
+        botMessage.className = 'bot-message';
+        chatbotOutput.appendChild(botMessage);
+
+        // Clear the input after sending a message
+        chatbotInput.value = "";
     });
 
     chatbotIcon.addEventListener('click', function () {
         if (chatbot.style.display === 'none') {
-            chatbot.style.display = 'block';
+            chatbot.style.display = 'flex';
         } else {
             chatbot.style.display = 'none';
         }
     });
 });
-
-  
