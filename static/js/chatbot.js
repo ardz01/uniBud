@@ -11,6 +11,10 @@ document.addEventListener('DOMContentLoaded', function () {
         botMessage.className = 'bot-message';
         chatbotOutput.appendChild(botMessage);
     }
+
+    function scrollToBottom() {
+      chatbotOutput.scrollTop = chatbotOutput.scrollHeight;
+  }
     
     chatbotIcon.addEventListener('click', function () {
         if (chatbot.style.display === 'none') {
@@ -32,11 +36,13 @@ document.addEventListener('DOMContentLoaded', function () {
         userMessage.textContent = question;
         userMessage.className = 'user-message';
         chatbotOutput.appendChild(userMessage);
+        scrollToBottom();
 
         const botMessage = document.createElement('div');
         botMessage.textContent = data.answer;
         botMessage.className = 'bot-message';
         chatbotOutput.appendChild(botMessage);
+        scrollToBottom();
 
         // Clear the input after sending a message
         chatbotInput.value = "";
