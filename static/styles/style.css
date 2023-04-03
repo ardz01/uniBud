@@ -1403,21 +1403,32 @@ margin-bottom: 10px;
 
 .bot-message-wrapper {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
   margin-bottom: 5px;
 }
 
-
+.chatbot-avatar-and-name {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
 
 .chatbot-avatar {
-  width: 40px;
-  height: 40px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   overflow: hidden;
   margin-right: 5px;
-  margin-bottom: 5px;
 }
+
+.chatbot-name {
+  font-weight: bold;
+  font-size: 12px;
+}
+
+
+
 
 
 .chatbot-avatar img {
@@ -1474,9 +1485,24 @@ margin-left: auto;
 
 
 .bot-message {
-background-color: #f1f1f1;
-margin-right: auto;
+  background-color: #f1f1f1;
+  margin-right: auto;
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin-bottom: 5px;
+  max-width: 80%;
+  word-wrap: break-word;
+  align-self: flex-end;
 }
+
+
+.bot-message-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+}
+
+
 
 .typing-indicator {
 display: inline-block;

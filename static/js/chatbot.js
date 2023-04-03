@@ -10,20 +10,35 @@ document.addEventListener('DOMContentLoaded', function () {
         const botMessageWrapper = document.createElement('div');
         botMessageWrapper.className = 'bot-message-wrapper';
       
-        const chatbotAvatar = document.createElement('img');
-        const avatarSrc = document.getElementById('chatbot-avatar').dataset.avatarSrc;
-        chatbotAvatar.src = avatarSrc;
-        chatbotAvatar.alt = "Chatbot Avatar";
+        const chatbotAvatarAndName = document.createElement('div');
+        chatbotAvatarAndName.className = 'chatbot-avatar-and-name';
+      
+        const chatbotAvatar = document.createElement('div');
         chatbotAvatar.className = 'chatbot-avatar';
+        const avatarImg = document.createElement('img');
+        const avatarSrc = document.getElementById('chatbot-avatar').dataset.avatarSrc;
+        avatarImg.src = avatarSrc;
+        avatarImg.alt = "Chatbot Avatar";
+        chatbotAvatar.appendChild(avatarImg);
+      
+        const chatbotName = document.createElement('div');
+        chatbotName.textContent = 'uniBot';
+        chatbotName.className = 'chatbot-name';
+      
+        chatbotAvatarAndName.appendChild(chatbotAvatar);
+        chatbotAvatarAndName.appendChild(chatbotName);
       
         const botMessage = document.createElement('div');
         botMessage.textContent = text;
         botMessage.className = 'bot-message';
       
-        botMessageWrapper.appendChild(chatbotAvatar);
+        botMessageWrapper.appendChild(chatbotAvatarAndName);
         botMessageWrapper.appendChild(botMessage);
         chatbotOutput.appendChild(botMessageWrapper);
       }
+      
+      
+    
 
     function createUserMessage(text) {
         const userMessageWrapper = document.createElement('div');
