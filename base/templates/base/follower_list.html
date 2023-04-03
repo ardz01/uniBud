@@ -1,5 +1,5 @@
 {% extends 'main.html' %}
-
+{% load static %}
 {% block content %}
   <main class="layout">
     <div class="container">
@@ -42,4 +42,5 @@
       </div>
     </div>
   </main>
+  <script src="{% static 'js/chatbot.js' %}"></script> 
 {% endblock %}

@@ -51,37 +51,7 @@
         {% endif %}
     </div>
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const upvoteForms = document.querySelectorAll('.upvote-form');
-    
-        // Upvote event listener
-        upvoteForms.forEach(form => {
-            const upvoteContainer = form.querySelector('.upvote-container');
-    
-            upvoteContainer.addEventListener('click', (event) => {
-                event.preventDefault();
-    
-                const formData = new FormData(form);
-                fetch(form.action, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
-                    },
-                    body: formData,
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        form.querySelector('.upvote-count').textContent = data.upvotes;
-                    }
-                });
-            });
-        });
-    
-        // Remove the downvote event listener
-    });
-    </script>
+
     
     
     

@@ -69,5 +69,115 @@ const conversationThread = document.querySelector(".room__box");
 if (conversationThread) conversationThread.scrollTop = conversationThread.scrollHeight;
 
 
+// inbox
+
+document.querySelectorAll('.message').forEach((message) => {
+  message.addEventListener('click', (event) => {
+    event.preventDefault();
+    const messageId = message.getAttribute('data-message-id');
+    
+    // Fetch the message content
+    fetch(`/message/${messageId}/`) // Update this URL with the correct route to fetch the message
+      .then((response) => response.text())
+      .then((html) => {
+        // Update the message view with the fetched content
+        document.querySelector('.message-view').innerHTML = html;
+      })
+      .catch((error) => {
+        console.error('Error fetching message:', error);
+      });
+  });
+});
 
 
+//Feed Component
+
+document.addEventListener('DOMContentLoaded', () => {
+  const upvoteForms = document.querySelectorAll('.upvote-form');
+
+  // Upvote event listener
+  upvoteForms.forEach(form => {
+      const upvoteContainer = form.querySelector('.upvote-container');
+
+      upvoteContainer.addEventListener('click', (event) => {
+          event.preventDefault();
+
+          const formData = new FormData(form);
+          fetch(form.action, {
+              method: 'POST',
+              headers: {
+                  'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+              },
+              body: formData,
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                  form.querySelector('.upvote-count').textContent = data.upvotes;
+              }
+          });
+      });
+  });
+
+  // Remove the downvote event listener
+});
+
+
+
+//ROOM JS
+
+document.querySelectorAll('.dropdown-button').forEach((button) => {
+  button.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    // Toggle the 'show-icon' class for the clicked dropdown button
+    const adminIcons = event.target.closest('.participant').querySelectorAll('.admin-icon');
+    adminIcons.forEach((icon) => {
+      icon.classList.toggle('show-icon');
+    });
+  });
+});
+
+
+document.querySelectorAll('.kick-out').forEach((icon) => {
+  icon.addEventListener('click', (event) => {
+    event.preventDefault(); // Prevent the default behavior
+    event.stopPropagation(); // Prevent the click event from propagating to the participant element
+    const userId = event.target.closest('.kick-out').dataset.userId;
+    const roomId = document.querySelector('.participants__list').dataset.roomId;
+    location.href = `/room/${roomId}/kick-out/${userId}/`;
+  });
+});
+
+document.querySelectorAll('.make-admin').forEach((icon) => {
+  icon.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const userId = event.target.closest('.make-admin').dataset.userId;
+    const roomId = document.querySelector('.participants__list').dataset.roomId;
+    location.href = `/room/${roomId}/make-admin/${userId}/`;
+  });
+});
+
+document.querySelectorAll('.un-admin').forEach((icon) => {
+  icon.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const userId = event.target.closest('.un-admin').dataset.userId;
+    const roomId = document.querySelector('.participants__list').dataset.roomId;
+    location.href = `/room/${roomId}/un-admin/${userId}/`;
+  });
+});
+
+
+// Move participants to the correct divs based on their roles
+document.querySelectorAll('.participant').forEach((participant) => {
+  if (participant.classList.contains('owner')) {
+    document.querySelector('.owner').appendChild(participant);
+  } else if (participant.classList.contains('admin')) {
+    document.querySelector('.admins').appendChild(participant);
+  } else {
+    document.querySelector('.members').appendChild(participant);
+  }
+})
