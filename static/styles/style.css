@@ -1403,10 +1403,12 @@ margin-bottom: 10px;
 
 .bot-message-wrapper {
   display: flex;
+  flex-direction: row;
   align-items: flex-start;
   margin-bottom: 5px;
-  position: relative;
 }
+
+
 
 .chatbot-avatar {
   width: 40px;
@@ -1414,9 +1416,7 @@ margin-bottom: 10px;
   border-radius: 50%;
   overflow: hidden;
   margin-right: 5px;
-  position: absolute;
-  top: 0;
-  left: 0;
+  margin-bottom: 5px;
 }
 
 
@@ -1425,17 +1425,6 @@ margin-bottom: 10px;
   height: 100%;
   object-fit: cover;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 .chatbot-form {
@@ -1476,6 +1465,14 @@ color: white;
 margin-left: auto;
 }
 
+.user-message-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 5px;
+}
+
+
 .bot-message {
 background-color: #f1f1f1;
 margin-right: auto;
@@ -1492,8 +1489,10 @@ animation: typing-indicator-blink 1.4s infinite both;
 }
 
 .typing-indicator-wrapper {
-position: relative;
-display: none;
+  display: none;
+  position: relative;
+  flex-direction: row;
+  align-items: center;
 }
 
 

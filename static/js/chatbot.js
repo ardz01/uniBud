@@ -9,20 +9,32 @@ document.addEventListener('DOMContentLoaded', function () {
     function createBotMessage(text) {
         const botMessageWrapper = document.createElement('div');
         botMessageWrapper.className = 'bot-message-wrapper';
-    
+      
         const chatbotAvatar = document.createElement('img');
         const avatarSrc = document.getElementById('chatbot-avatar').dataset.avatarSrc;
         chatbotAvatar.src = avatarSrc;
         chatbotAvatar.alt = "Chatbot Avatar";
         chatbotAvatar.className = 'chatbot-avatar';
-    
+      
         const botMessage = document.createElement('div');
         botMessage.textContent = text;
         botMessage.className = 'bot-message';
-    
+      
         botMessageWrapper.appendChild(chatbotAvatar);
         botMessageWrapper.appendChild(botMessage);
         chatbotOutput.appendChild(botMessageWrapper);
+      }
+
+    function createUserMessage(text) {
+        const userMessageWrapper = document.createElement('div');
+        userMessageWrapper.className = 'user-message-wrapper';
+    
+        const userMessage = document.createElement('div');
+        userMessage.textContent = text;
+        userMessage.className = 'user-message';
+    
+        userMessageWrapper.appendChild(userMessage);
+        chatbotOutput.appendChild(userMessageWrapper);
     }
 
 
@@ -44,33 +56,27 @@ document.addEventListener('DOMContentLoaded', function () {
     chatbotForm.addEventListener('submit', async function (event) {
         event.preventDefault();
         const question = chatbotInput.value;
-        const userMessage = document.createElement('div');
-        userMessage.textContent = question;
-        userMessage.className = 'user-message';
-        chatbotOutput.appendChild(userMessage);
+        createUserMessage(question);
         scrollToBottom();
-
+      
         // Clear the input after sending a message
         chatbotInput.value = "";
-
+      
         // Show typing indicator
-        typingIndicatorWrapper.style.display = 'block';
+        typingIndicatorWrapper.style.display = 'flex';
         console.log("Typing indicator should be visible now");
-
+      
         // Simulate a delay before getting a response
         setTimeout(async function () {
-            const response = await fetch(`/chatbot/ask/?question=${question}`);
-            const data = await response.json();
-            await new Promise(resolve => setTimeout(resolve, 2000));
-
-            // Hide typing indicator
-            typingIndicatorWrapper.style.display = 'none';
-            console.log("Typing indicator should be hidden now");
-            const botMessage = document.createElement('div');
-            botMessage.textContent = data.answer;
-            botMessage.className = 'bot-message';
-            chatbotOutput.appendChild(botMessage);
-            scrollToBottom();
+          const response = await fetch(`/chatbot/ask/?question=${question}`);
+          const data = await response.json();
+          await new Promise(resolve => setTimeout(resolve, 2000));
+      
+          // Hide typing indicator
+          typingIndicatorWrapper.style.display = 'none';
+          console.log("Typing indicator should be hidden now");
+          createBotMessage(data.answer);
+          scrollToBottom();
         }, 1500); // You can adjust the delay time (in milliseconds) as needed
-    });
+      });
 });
