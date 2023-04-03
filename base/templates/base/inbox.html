@@ -1,41 +1,6 @@
 {% extends 'main.html' %}
 
 {% block content %}
-<style>
-  .inbox-container {
-    display: flex;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .inbox {
-    flex: 1;
-    border-right: 1px solid #6e6a6a;
-    padding-right: 20px;
-  }
-  .message-view {
-    flex: 2;
-    padding-left: 20px;
-    min-height: 400px;
-    height: 400px; /* Set a fixed height according to your needs */
-    overflow-y: auto;
-  }
-
-  .message__subject {
-    font-weight: bold;
-    color: aqua;
-  }
-  .message__avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 10px;
-  }
-  .message-view-top {
-    margin-top: 20px; /* Adjust this value according to your needs */
-  }
-</style>
-
 <main class="create-room layout">
   <div class="container">
     <div class="layout__box">
