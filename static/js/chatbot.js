@@ -25,19 +25,6 @@ document.addEventListener('DOMContentLoaded', function () {
         chatbotOutput.appendChild(botMessageWrapper);
     }
 
-    function createUserMessage(text) {
-  const userMessageWrapper = document.createElement('div');
-  userMessageWrapper.className = 'user-message-wrapper';
-
-  const userMessage = document.createElement('div');
-  userMessage.textContent = text;
-  userMessage.className = 'user-message';
-
-  userMessageWrapper.appendChild(userMessage);
-  chatbotOutput.appendChild(userMessageWrapper);
-}
-
-    
 
     function scrollToBottom() {
         chatbotOutput.scrollTop = chatbotOutput.scrollHeight;
