@@ -7,11 +7,37 @@ document.addEventListener('DOMContentLoaded', function () {
     const typingIndicatorWrapper = document.getElementById('typing-indicator');
 
     function createBotMessage(text) {
+        const botMessageWrapper = document.createElement('div');
+        botMessageWrapper.className = 'bot-message-wrapper';
+    
+        const chatbotAvatar = document.createElement('img');
+        const avatarSrc = document.getElementById('chatbot-avatar').dataset.avatarSrc;
+        chatbotAvatar.src = avatarSrc;
+        chatbotAvatar.alt = "Chatbot Avatar";
+        chatbotAvatar.className = 'chatbot-avatar';
+    
         const botMessage = document.createElement('div');
         botMessage.textContent = text;
         botMessage.className = 'bot-message';
-        chatbotOutput.appendChild(botMessage);
+    
+        botMessageWrapper.appendChild(chatbotAvatar);
+        botMessageWrapper.appendChild(botMessage);
+        chatbotOutput.appendChild(botMessageWrapper);
     }
+
+    function createUserMessage(text) {
+  const userMessageWrapper = document.createElement('div');
+  userMessageWrapper.className = 'user-message-wrapper';
+
+  const userMessage = document.createElement('div');
+  userMessage.textContent = text;
+  userMessage.className = 'user-message';
+
+  userMessageWrapper.appendChild(userMessage);
+  chatbotOutput.appendChild(userMessageWrapper);
+}
+
+    
 
     function scrollToBottom() {
         chatbotOutput.scrollTop = chatbotOutput.scrollHeight;
