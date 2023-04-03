@@ -53,6 +53,42 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
+
+    function createOptionsMessage(options) {
+        const optionsWrapper = document.createElement('div');
+        optionsWrapper.className = 'options-wrapper';
+    
+        options.forEach(option => {
+            const optionButton = document.createElement('button');
+            optionButton.className = 'option-button';
+            optionButton.textContent = option.text;
+            optionButton.addEventListener('click', async function () {
+                createUserMessage(option.text);
+                scrollToBottom();
+    
+                // Show typing indicator
+                typingIndicatorWrapper.style.display = 'flex';
+    
+                // Simulate a delay before getting a response
+                setTimeout(async function () {
+                    await new Promise(resolve => setTimeout(resolve, 400));
+    
+                    // Hide typing indicator
+                    typingIndicatorWrapper.style.display = 'none';
+                    createBotMessage(option.response);
+                    scrollToBottom();
+                }, 400);
+            });
+            optionsWrapper.appendChild(optionButton);
+        });
+    
+        chatbotOutput.appendChild(optionsWrapper);
+    }
+    
+
+
+
+
     function scrollToBottom() {
         chatbotOutput.scrollTop = chatbotOutput.scrollHeight;
     }
@@ -61,12 +97,19 @@ document.addEventListener('DOMContentLoaded', function () {
         if (chatbot.style.display === 'none') {
             chatbot.style.display = 'flex';
             if (!chatbotOutput.hasChildNodes()) {
-                createBotMessage('Hi, how may I help you today?');
+                createBotMessage('Hi, what information are you looking for?');
+                createOptionsMessage([
+                    { text: 'Study Tips', response: 'Here are some study tips: ...' },
+                    { text: 'Clubs', response: 'We have a variety of clubs and organizations on campus! ...' },
+                    { text: 'Events', response: 'There are many events happening on campus throughout the year, ...' },
+                    { text: 'Housing', response: 'We offer a variety of housing options for students, ...' },
+                ]);
             }
         } else {
             chatbot.style.display = 'none';
         }
     });
+    
 
     chatbotForm.addEventListener('submit', async function (event) {
         event.preventDefault();
