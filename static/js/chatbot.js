@@ -70,13 +70,13 @@ document.addEventListener('DOMContentLoaded', function () {
         setTimeout(async function () {
           const response = await fetch(`/chatbot/ask/?question=${question}`);
           const data = await response.json();
-          await new Promise(resolve => setTimeout(resolve, 2000));
+          await new Promise(resolve => setTimeout(resolve, 400));
       
           // Hide typing indicator
           typingIndicatorWrapper.style.display = 'none';
           console.log("Typing indicator should be hidden now");
           createBotMessage(data.answer);
           scrollToBottom();
-        }, 1500); // You can adjust the delay time (in milliseconds) as needed
+        }, 400); // You can adjust the delay time (in milliseconds) as needed
       });
 });
