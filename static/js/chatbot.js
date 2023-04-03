@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
         chatbotAvatarAndName.className = 'chatbot-avatar-and-name';
       
         const chatbotAvatar = document.createElement('div');
-        chatbotAvatar.className = 'chatbot-avatar';
+        chatbotAvatar.className = 'chatbot-avatar chatbot-response-avatar';
         const avatarImg = document.createElement('img');
         const avatarSrc = document.getElementById('chatbot-avatar').dataset.avatarSrc;
         avatarImg.src = avatarSrc;
@@ -95,3 +95,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 400); // You can adjust the delay time (in milliseconds) as needed
       });
 });
+
+document.querySelector('.chatbot-close').addEventListener('click', function() {
+    document.querySelector('.chatbot').style.display = 'none';
+  });
+  

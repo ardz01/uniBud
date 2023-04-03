@@ -35,11 +35,23 @@
       </svg>
     </div>
     <div class="chatbot">
+      <div class="chatbot-header">
+        <div class="chatbot-avatar chatbot-header-avatar">
+          <img src="{% static 'images/bot.png' %}" alt="Chatbot Avatar">
+        </div>        
+        <div class="chatbot-name-status">
+          <div class="chatbot-name">Chatbot</div>
+          <div class="chatbot-status">Online</div>
+        </div>
+        <div class="chatbot-close">
+          <span>&times;</span>
+        </div>
+      </div>
       <div class="chatbot-body">
         <div class="chatbot-messages">
-          <div class="chatbot-avatar" id="chatbot-avatar" style="display:none;" data-avatar-src="{% static 'images/bot.png' %}">
+          <div class="chatbot-avatar chatbot-response-avatar" id="chatbot-avatar" style="display:none;" data-avatar-src="{% static 'images/bot.png' %}">
             <img src="{% static 'images/bot.png' %}" alt="Chatbot Avatar">
-        </div> 
+          </div>          
               
           <div class="output-wrapper">
             <div class="chatbot-output" id="chatbot-output"></div>

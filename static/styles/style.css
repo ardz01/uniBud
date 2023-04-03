@@ -1351,11 +1351,15 @@ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
 
 .chatbot-header {
-background-color: #5641b1;
-padding: 15px;
-color: #fff;
-font-size: 18px;
-border-radius: 8px 8px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff; /* Change the background color to white */
+  color: #000000; /* Change the text color to black */
+  padding: 8px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom: 1px solid #ccc; /* Add a border at the bottom */
 }
 
 .chatbot-body {
@@ -1414,17 +1418,44 @@ margin-bottom: 10px;
   margin-bottom: 5px;
 }
 
+.chatbot-header-avatar {
+  width: 50px;
+  height: 50px;
+}
+
+.chatbot-response-avatar {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+
 .chatbot-avatar {
-  width: 20px;
-  height: 20px;
   border-radius: 50%;
   overflow: hidden;
   margin-right: 5px;
 }
 
-.chatbot-name {
-  font-weight: bold;
+.chatbot-name-status {
+  display: flex;
+  flex-direction: row; /* Change from column to row */
+  align-items: center; /* Add alignment for the items */
+  justify-content: space-between; /* Add space between the items */
+  width: 100%; /* Make sure the container takes the full width */
+}
+
+.chatbot-name-status {
+  display: flex;
+  flex-direction: column;
+}
+
+.chatbot-status {
   font-size: 12px;
+  color: #888; /* Change the status color to a lighter gray */
+}
+
+.chatbot-close {
+  font-size: 20px;
+  cursor: pointer;
 }
 
 
