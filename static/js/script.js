@@ -181,3 +181,52 @@ document.querySelectorAll('.participant').forEach((participant) => {
     document.querySelector('.members').appendChild(participant);
   }
 })
+
+
+//invite
+
+function toggleInviteDropdown() {
+  console.log("toggleInviteDropdown called");
+  var dropdown = document.getElementById("inviteDropdown");
+  dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+}
+
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+
+function inviteUser(userPk) {
+  console.log("inviteUser called with userPk:", userPk);
+  var dropdown = document.getElementById("inviteDropdown");
+  const roomPk = dropdown.getAttribute("data-room-pk");
+  const inviteUrl = `/room/${roomPk}/invite/${userPk}/`;
+
+  fetch(inviteUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': getCookie('csrftoken'),
+    },
+  }).then(response => {
+    if (response.status === 204) {
+      alert('Invitation sent!');
+    } else {
+      alert('Failed to send the invitation.');
+    }
+  });
+}
+
+
+

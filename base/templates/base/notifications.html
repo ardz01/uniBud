@@ -30,6 +30,9 @@
                   <span>{{ notification.timestamp|date:"F d, Y H:i" }}</span>
                   {% if notification.notification_type == 'follow' %}
                     <p>{{ notification.sender.username }} has started following you.</p>
+                    {% elif notification.notification_type == 'room_invite' %}
+                    <p>@{{ notification.sender.username }} has invited you to join the room "{{ notification.room.name }}"</p>
+                    <a href="{% url 'join_room' notification.room.pk %}" class="btn btn-primary">Accept</a>
                   {% endif %}
                 </div>
                 <a href="{% url 'delete_notification' notification.id %}" class="delete-icon">
@@ -40,6 +43,8 @@
                 </a>
               </div>
             </li>
+
+            
           {% endfor %}
 
 

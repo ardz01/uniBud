@@ -126,6 +126,7 @@ def room(request, pk):
     room_messages = room.message_set.all().order_by('created')
     participants = room.participants.all()
     is_admin = request.user in room.admins.all()
+    following = request.user.following.all()
 
     if request.method == 'POST':
         message = Message.objects.create(
@@ -137,7 +138,7 @@ def room(request, pk):
         return redirect('room', pk=room.id)
 
     context = {'room': room, 'room_messages': room_messages,
-               'participants': participants, 'is_admin': is_admin,}
+               'participants': participants, 'is_admin': is_admin, 'following': following}
     return render(request, 'base/room.html', context)
 
 
@@ -445,3 +446,28 @@ def unadmin_user(request, room_id, user_id):
 
     messages.success(request, f"{user.username} has been removed as an admin.")
     return redirect('room', room_id)
+
+
+
+def invite_to_room(request, room_pk, user_pk):
+    room = get_object_or_404(Room, pk=room_pk)
+    user_to_invite = get_object_or_404(User, pk=user_pk)
+
+    if request.user.is_authenticated:
+        notification = Notification(
+            sender=request.user,
+            receiver=user_to_invite,
+            notification_type='room_invite',
+            room=room
+        )
+        notification.save()
+    return HttpResponse(status=204)  # Return a success status
+
+
+def join_room(request, room_pk):
+    room = get_object_or_404(Room, pk=room_pk)
+    if request.user.is_authenticated:
+        room.participants.add(request.user)
+        return redirect('room', pk=room_pk)
+    else:
+        return redirect('login')
