@@ -895,6 +895,15 @@ a {
   color: var(--color-dark-light);
 }
 
+.profile__buttons {
+  display: flex;
+  gap: 10px; /* adjust the value as needed */
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+
+
 /*==============================
 =>  Room
 ================================*/
@@ -1491,7 +1500,7 @@ margin-bottom: 10px;
 }
 
 .chatbot-close {
-  font-size: 20px;
+  font-size: 30px;
   cursor: pointer;
 }
 
