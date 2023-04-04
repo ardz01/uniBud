@@ -206,6 +206,19 @@ function getCookie(name) {
   return cookieValue;
 }
 
+function showMessage(message) {
+  const messageContainer = document.createElement('div');
+  messageContainer.className = 'message-container';
+  messageContainer.innerText = message;
+
+  document.body.appendChild(messageContainer);
+
+  setTimeout(() => {
+    messageContainer.remove();
+  }, 3000);
+}
+
+
 
 function inviteUser(userPk) {
   console.log("inviteUser called with userPk:", userPk);
@@ -221,9 +234,9 @@ function inviteUser(userPk) {
     },
   }).then(response => {
     if (response.status === 204) {
-      alert('Invitation sent!');
+      showMessage('Invitation sent!');
     } else {
-      alert('Failed to send the invitation.');
+      showMessage('Failed to send the invitation.');
     }
   });
 }
