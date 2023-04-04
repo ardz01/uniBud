@@ -47,22 +47,22 @@
           <span>&times;</span>
         </div>
       </div>
-      <div class="chatbot-body">
-        <div class="chatbot-messages">
-          <div class="chatbot-avatar chatbot-response-avatar" id="chatbot-avatar" style="display:none;" data-avatar-src="{% static 'images/bot.png' %}">
-            <img src="{% static 'images/bot.png' %}" alt="Chatbot Avatar">
-          </div>          
-              
-          <div class="output-wrapper">
-            <div class="chatbot-output" id="chatbot-output"></div>
-            <div class="typing-indicator-wrapper" id="typing-indicator" style="display: none;">
-              <span class="typing-indicator"></span>
-              <span class="typing-indicator"></span>
-              <span class="typing-indicator"></span>
+      ...
+        <div class="chatbot-body">
+          <div class="chatbot-messages scrollbar-container">
+            <div class="chatbot-avatar chatbot-response-avatar" id="chatbot-avatar" style="display:none;" data-avatar-src="{% static 'images/bot.png' %}">
+              <img src="{% static 'images/bot.png' %}" alt="Chatbot Avatar">
+            </div>          
+                  
+            <div class="output-wrapper">
+              <div class="chatbot-output" id="chatbot-output"></div>
+              <div class="typing-indicator-wrapper" id="typing-indicator" style="display: none;">
+                <span class="typing-indicator"></span>
+                <span class="typing-indicator"></span>
+                <span class="typing-indicator"></span>
+              </div>
             </div>
           </div>
-        </div>
-          
          
         </div>
         <form class="chatbot-form" id="chatbot-form">
