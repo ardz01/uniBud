@@ -9,12 +9,22 @@
         </a>
         <form class="header__search" method="GET" action="{% url 'home' %}">
             <label>
-                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                <svg class="search-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                    <defs>
+                      <linearGradient id="search-icon-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#004c8c;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#00a200;stop-opacity:1" />
+                      </linearGradient>
+                      <linearGradient id="search-icon-gradient-active" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#003366;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#008000;stop-opacity:1" />
+                      </linearGradient>
+                    </defs>
                     <title>search</title>
-                    <path
-                        d="M32 30.586l-10.845-10.845c1.771-2.092 2.845-4.791 2.845-7.741 0-6.617-5.383-12-12-12s-12 5.383-12 12c0 6.617 5.383 12 12 12 2.949 0 5.649-1.074 7.741-2.845l10.845 10.845 1.414-1.414zM12 22c-5.514 0-10-4.486-10-10s4.486-10 10-10c5.514 0 10 4.486 10 10s-4.486 10-10 10z">
-                    </path>
-                </svg>
+                    <path id="search-icon-path"
+                          d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                  </svg>
+                  
                 <input name="q" placeholder="Search For Rooms" />
                 <div class="search-addon"></div>
             </label>

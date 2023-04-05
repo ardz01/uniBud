@@ -404,6 +404,21 @@ a {
 }
 
 
+#search-icon-path {
+  fill: url(#search-icon-gradient);
+}
+
+.search-icon.active #search-icon-path {
+  fill: url(#search-icon-gradient-active);
+}
+
+.search-icon {
+  transition: fill 0.3s ease-in-out;
+}
+
+
+
+
 /*==============================
 =>  Layout
 ================================*/

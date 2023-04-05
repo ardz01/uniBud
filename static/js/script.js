@@ -267,5 +267,17 @@ function setRandomSearchIcon() {
 
 document.addEventListener('DOMContentLoaded', setRandomSearchIcon);
 
+//search icon
+
+const searchInput = document.querySelector('input[name="q"]');
+const searchIcon = document.querySelector('.search-icon');
+
+searchInput.addEventListener('focus', () => {
+  searchIcon.classList.add('active');
+});
+
+searchInput.addEventListener('blur', () => {
+  searchIcon.classList.remove('active');
+});
 
 
