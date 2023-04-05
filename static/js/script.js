@@ -243,3 +243,29 @@ function inviteUser(userPk) {
 
 
 
+//random search icon
+
+function getRandomIcon() {
+  const icons = [
+    '/static/images/icons/homework.png',
+    '/static/images/icons/book-day.png',
+    '/static/images/icons/studying.png',
+    '/static/images/icons/knowledge.png',
+    '/static/images/icons/paint-kit-dynamic-color.png',
+    // Add more image paths here
+  ];
+
+  const randomIndex = Math.floor(Math.random() * icons.length);
+  return icons[randomIndex];
+}
+
+function setRandomSearchIcon() {
+  const searchAddon = document.querySelector('.search-addon');
+  const iconPath = getRandomIcon();
+  searchAddon.style.backgroundImage = `url('${iconPath}')`;
+}
+
+document.addEventListener('DOMContentLoaded', setRandomSearchIcon);
+
+
+

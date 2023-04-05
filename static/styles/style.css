@@ -385,6 +385,25 @@ a {
   fill: var(--color-main);
 }
 
+
+.header__search label {
+  position: relative;
+}
+
+.search-addon {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-image: url('/static/images/icons/homework.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
 /*==============================
 =>  Layout
 ================================*/
