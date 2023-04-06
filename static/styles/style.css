@@ -1254,6 +1254,69 @@ a {
   z-index: 1000;
 }
 
+.message__container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.thread__reactions {
+  opacity: 0;
+  transition: opacity 0.3s;
+  position: absolute;
+  right: 0;
+  z-index: 1;
+}
+
+.message__container:hover .thread__reactions {
+  opacity: 1;
+}
+
+/*.emoji-picker {
+  display: flex;
+  position: absolute;
+  right: 0;
+  top: -20px;
+  /* Adjust the top value according to the size of the emoji picker */
+
+.emoji-picker {
+  display: flex;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  flex-wrap: nowrap;
+}
+
+.emoji {
+  margin-right: 4px;
+  cursor: pointer;
+}
+
+.message-content {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.message-reactions {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.reaction {
+  display: inline-block;
+  padding: 2px 4px;
+  margin: 2px;
+  background-color: rgba(70, 68, 68, 0.5); /* Light blue with 50% opacity */
+  border-radius: 10px;
+}
+
+
+.reaction:hover {
+  background-color: #62c4d1;
+}
+
 
 
 

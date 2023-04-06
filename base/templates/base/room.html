@@ -116,9 +116,29 @@
                 </a>
                 {% endif %}
               </div>
-              <div class="thread__details">
-                {{message.body}}
+              <div class="message__container">
+                <div class="thread__reactions">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16" onclick="showEmojiPicker(event, '{{ message.id }}')">
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                  </svg>
+                </div>
+                <div class="message-content">
+                  {{message.body}}
+                  <div class="message-reactions" data-message-id="{{ message.id }}">
+                      {% for reaction in message.reaction_set.all %}
+                          <span class="reaction">{{ reaction.emoji }}</span>
+                      {% endfor %}
+                  </div>
+              </div> 
+                <div class="emoji-picker" id="emojiPicker-{{ message.id }}" style="display: none;">
+                  <!-- Add your emoji options here -->
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😀')">😀</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😍')">😍</span>
+                  <!-- Add more emojis as needed -->
+                </div>              
               </div>
+              
+              
             </div>
             {% endfor %}
           </div>

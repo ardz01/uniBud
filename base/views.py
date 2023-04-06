@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q, Count
 from django.contrib.auth import authenticate, login, logout
-from .models import Room, Topic, Message, User, UserRoomVote, Notification
+from .models import Room, Topic, Message, User, UserRoomVote, Notification, Reaction
 from .forms import RoomForm, UserForm, MyUserCreationForm, MessageForm, UpvoteForm
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
@@ -471,3 +471,20 @@ def join_room(request, room_pk):
         return redirect('room', pk=room_pk)
     else:
         return redirect('login')
+
+
+
+def add_reaction(request):
+    if request.method == 'POST':
+        message_id = request.POST.get('message_id')
+        emoji = request.POST.get('emoji')
+
+        message = Message.objects.get(id=message_id)
+        reaction, created = Reaction.objects.get_or_create(emoji=emoji, user=request.user, message=message)
+
+        if not created:
+            reaction.delete()
+
+        return JsonResponse({'status': 'ok', 'message_id': message_id, 'emoji': emoji})
+    else:
+        return JsonResponse({'status': 'ok', 'message_id': message_id, 'emoji': emoji})

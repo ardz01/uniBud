@@ -90,3 +90,9 @@ class Notification(models.Model):
 
     def __str__(self):
         return f"{self.sender} - {self.notification_type}"
+    
+    
+class Reaction(models.Model):
+    emoji = models.CharField(max_length=10)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.ForeignKey(Message, on_delete=models.CASCADE)

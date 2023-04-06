@@ -281,3 +281,58 @@ searchInput.addEventListener('blur', () => {
 });
 
 
+
+//emojis
+
+
+
+  function showEmojiPicker(event, messageId) {
+    event.stopPropagation();
+    const emojiPicker = document.getElementById(`emojiPicker-${messageId}`);
+    emojiPicker.style.display = emojiPicker.style.display === "none" ? "block" : "none";
+  }
+
+  function addReaction(messageId, emoji) {
+    const csrfToken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "/add_reaction/", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.setRequestHeader("X-CSRFToken", csrfToken);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        const response = JSON.parse(xhr.responseText);
+        console.log('Received response:', response);
+        if (response.status === "ok") {
+          // Find the corresponding message-reactions div
+          const messageReactions = document.querySelector(`.message-reactions[data-message-id="${messageId}"]`);
+  
+          // Create a new reaction span and set its content to the chosen emoji
+          const newReaction = document.createElement("span");
+          newReaction.className = "reaction";
+          newReaction.textContent = emoji;
+  
+          // Append the new reaction to the message-reactions div
+          messageReactions.appendChild(newReaction);
+  
+          // Hide the emoji picker
+          const emojiPicker = document.getElementById(`emojiPicker-${messageId}`);
+          emojiPicker.style.display = "none";
+        } else {
+          console.error("Error adding reaction");
+        }
+      }
+    };
+    xhr.send(`message_id=${messageId}&emoji=${emoji}`);
+  }
+  
+
+  // Close the emoji picker when clicking outside of it
+  document.addEventListener('click', (event) => {
+    const emojiPickers = document.getElementsByClassName('emoji-picker');
+    for (let i = 0; i < emojiPickers.length; i++) {
+      emojiPickers[i].style.display = 'none';
+    }
+  });
+
+
+
