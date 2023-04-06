@@ -485,6 +485,9 @@ def add_reaction(request):
         if not created:
             reaction.delete()
 
-        return JsonResponse({'status': 'ok', 'message_id': message_id, 'emoji': emoji})
+        # Get the count of reactions for the emoji and message
+        reaction_count = Reaction.objects.filter(emoji=emoji, message=message).count()
+
+        return JsonResponse({'status': 'ok', 'message_id': message_id, 'emoji': emoji, 'reaction_count': reaction_count})
     else:
-        return JsonResponse({'status': 'ok', 'message_id': message_id, 'emoji': emoji})
+        return JsonResponse({'status': 'ok', 'message_id': message_id, 'emoji': emoji, 'reaction_count': reaction_count})

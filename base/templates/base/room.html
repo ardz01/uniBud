@@ -125,15 +125,51 @@
                 <div class="message-content">
                   {{message.body}}
                   <div class="message-reactions" data-message-id="{{ message.id }}">
-                      {% for reaction in message.reaction_set.all %}
-                          <span class="reaction">{{ reaction.emoji }}</span>
-                      {% endfor %}
-                  </div>
+                    {% for reaction in message.reaction_set.all %}
+                        <span class="reaction" data-emoji="{{ reaction.emoji }}" data-message-id="{{ message.id }}" onclick="addReaction('{{ message.id }}', '{{ reaction.emoji }}')">
+                            {{ reaction.emoji }} {{ reaction.count }}
+                        </span>
+                    {% endfor %}
+                </div>
+                
               </div> 
                 <div class="emoji-picker" id="emojiPicker-{{ message.id }}" style="display: none;">
                   <!-- Add your emoji options here -->
                   <span class="emoji" onclick="addReaction('{{ message.id }}', '😀')">😀</span>
                   <span class="emoji" onclick="addReaction('{{ message.id }}', '😍')">😍</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😀')">😀</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😃')">😃</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😄')">😄</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😁')">😁</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😆')">😆</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😅')">😅</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😂')">😂</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '🤣')">🤣</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😊')">😊</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😇')">😇</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😍')">😍</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😘')">😘</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😗')">😗</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😙')">😙</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😚')">😚</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😋')">😋</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😛')">😛</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😜')">😜</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😝')">😝</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😞')">😞</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😟')">😟</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😠')">😠</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😡')">😡</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😢')">😢</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😣')">😣</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😤')">😤</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😥')">😥</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😦')">😦</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😧')">😧</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😨')">😨</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😩')">😩</span>
+                  <span class="emoji" onclick="addReaction('{{ message.id }}', '😪')">😪</span>
+
                   <!-- Add more emojis as needed -->
                 </div>              
               </div>

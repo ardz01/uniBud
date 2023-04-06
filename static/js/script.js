@@ -300,28 +300,42 @@ searchInput.addEventListener('blur', () => {
     xhr.setRequestHeader("X-CSRFToken", csrfToken);
     xhr.onreadystatechange = function () {
       if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-        const response = JSON.parse(xhr.responseText);
-        console.log('Received response:', response);
-        if (response.status === "ok") {
-          // Find the corresponding message-reactions div
-          const messageReactions = document.querySelector(`.message-reactions[data-message-id="${messageId}"]`);
-  
-          // Create a new reaction span and set its content to the chosen emoji
-          const newReaction = document.createElement("span");
-          newReaction.className = "reaction";
-          newReaction.textContent = emoji;
-  
-          // Append the new reaction to the message-reactions div
-          messageReactions.appendChild(newReaction);
-  
-          // Hide the emoji picker
-          const emojiPicker = document.getElementById(`emojiPicker-${messageId}`);
-          emojiPicker.style.display = "none";
-        } else {
-          console.error("Error adding reaction");
-        }
+          const response = JSON.parse(xhr.responseText);
+          if (response.status === "ok") {
+              // Find the corresponding reaction element
+              const reactionElement = document.querySelector(`.reaction[data-emoji="${emoji}"][data-message-id="${messageId}"]`);
+              const messageReactions = document.querySelector(`.message-reactions[data-message-id="${messageId}"]`);
+
+
+              if (reactionElement) {
+                  // If the reaction element exists, update the count or remove it if the count is 0
+                  if (response.reaction_count > 0) {
+                      reactionElement.textContent = emoji + " " + response.reaction_count;
+                  } else {
+                      reactionElement.remove();
+                  }
+              } else {
+                  // If the reaction element doesn't exist, create it and set the count
+                  const newReaction = document.createElement("span");
+                  newReaction.className = "reaction";
+                  newReaction.setAttribute("data-emoji", emoji);
+                  newReaction.setAttribute("data-message-id", messageId);
+                  newReaction.textContent = emoji + " " + response.reaction_count;
+                  newReaction.onclick = function () {
+                      addReaction(messageId, emoji);
+                  };
+
+                  messageReactions.appendChild(newReaction);
+              }
+
+              // Hide the emoji picker
+              const emojiPicker = document.getElementById(`emojiPicker-${messageId}`);
+              emojiPicker.style.display = "none";
+          } else {
+              console.error("Error adding reaction");
+          }
       }
-    };
+  };
     xhr.send(`message_id=${messageId}&emoji=${emoji}`);
   }
   
