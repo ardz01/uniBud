@@ -208,7 +208,7 @@ function getCookie(name) {
 
 function showMessage(message) {
   const messageContainer = document.createElement('div');
-  messageContainer.className = 'message-container';
+  messageContainer.className = 'popup-message-container';
   messageContainer.innerText = message;
 
   document.body.appendChild(messageContainer);
