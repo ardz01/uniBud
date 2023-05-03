@@ -39,7 +39,8 @@ urlpatterns = [
 
     path('get_notifications/', views.get_notifications, name='get_notifications'),
     path('delete_notification/<int:notification_id>/', views.delete_notification, name='delete_notification'),
-
+    path('delete_message/<int:message_id>/', views.delete_message, name='delete_message'),
+    
     path('room/<int:room_pk>/invite/<int:user_pk>/', views.invite_to_room, name='invite_to_room'),
     path('join-room/<int:room_pk>/', views.join_room, name='join_room'),
     path('add_reaction/', views.add_reaction, name='add_reaction'),

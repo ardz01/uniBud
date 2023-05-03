@@ -1,7 +1,11 @@
 {% for room in rooms %}
 <div class="roomListRoom">
     <div class="roomListRoom__header">
+        {% if room.host %}
         <a href="{% url 'user-profile' room.host.id %}" class="roomListRoom__author">
+    {% else %}
+        <!-- Add some fallback content if the host is not available -->
+    {% endif %}
             <div class="avatar avatar--small">
                 <img src="{{room.host.avatar.url}}" />
             </div>

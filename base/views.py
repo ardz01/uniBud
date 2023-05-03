@@ -348,6 +348,20 @@ def inbox(request):
 
 
 @login_required(login_url='login')
+def delete_message(request, message_id):
+    if request.method == 'POST':
+        try:
+            message = request.user.messages.get(id=message_id)
+            message.delete()
+            return JsonResponse({'status': 'success', 'message': 'Message deleted.'})
+        except:
+            return JsonResponse({'status': 'error', 'message': 'Message not found.'})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Invalid request method.'})
+
+
+
+@login_required(login_url='login')
 def viewMessage(request, pk):
     user = request.user
     message = user.messages.get(id=pk)
@@ -359,7 +373,7 @@ def viewMessage(request, pk):
 
 
 def createMessage(request, pk):
-    recipient = User.objects.get(id=pk)
+    recipient, _ = User.objects.get_or_create(id=pk)
     form = MessageForm()
 
     try:
@@ -373,7 +387,10 @@ def createMessage(request, pk):
             message = form.save(commit=False)
             message.user = user
             message.recipient = recipient
-            message.room_id = pk
+
+            # Retrieve or create the room instance
+            room, _ = Room.objects.get_or_create(id=pk)
+            message.room = room
 
             if user:
                 message.name = user.name

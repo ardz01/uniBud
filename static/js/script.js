@@ -90,6 +90,53 @@ document.querySelectorAll('.message').forEach((message) => {
 });
 
 
+//inbox delete
+
+document.addEventListener('DOMContentLoaded', function() {
+  const deleteButtons = document.querySelectorAll('.message__delete');
+
+  deleteButtons.forEach(button => {
+    button.addEventListener('click', async function(event) {
+      event.preventDefault();
+      let target = event.target;
+      
+      // If the target is the SVG, use its parent button element as the target
+      if (target.tagName === 'svg' || target.tagName === 'path') {
+        target = target.closest('.message__delete');
+      }
+      
+      const messageId = target.getAttribute('data-message-id');
+      const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+      try {
+        const response = await fetch(`/delete_message/${messageId}/`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken,
+          },
+        });
+        
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const result = await response.json();
+
+        if (result.status === 'success') {
+          target.closest('.message').remove();
+        } else {
+          console.error(result.message);
+        }
+      } catch (error) {
+        console.error('There was a problem with the fetch operation: ', error);
+      }
+    });
+  });
+});
+
+
+
 //Feed Component
 
 document.addEventListener('DOMContentLoaded', () => {
