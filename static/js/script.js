@@ -397,3 +397,39 @@ searchInput.addEventListener('blur', () => {
 
 
 
+//room scroll
+
+function scrollToBottom(element) {
+  element.scrollTop = element.scrollHeight;
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const conversationContainer = document.querySelector(".threads.scroll");
+  scrollToBottom(conversationContainer);
+});
+
+
+const messageForm = document.getElementById("message-form");
+
+messageForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const formData = new FormData(messageForm);
+  const response = await fetch(messageForm.action, {
+    method: "POST",
+    body: formData,
+    headers: {
+      "X-CSRFToken": formData.get("csrfmiddlewaretoken"),
+    },
+  });
+
+  if (response.ok) {
+    const conversationContainer = document.querySelector(".threads.scroll");
+    scrollToBottom(conversationContainer);
+    // Clear the input field after sending the message
+    messageForm.reset();
+    // You may need to update the conversation with the new message
+  } else {
+    console.error("Error sending message:", response.statusText);
+  }
+});
