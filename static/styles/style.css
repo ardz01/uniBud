@@ -1845,9 +1845,7 @@ opacity: 0;
 .message__subject {
   margin: 0;
 }
-.message__author {
-  font-weight: bold;
-}
+
 .message__date {
   font-size: 0.9em;
   color: #777;
@@ -1858,3 +1856,50 @@ opacity: 0;
 .messagePage-top {
 margin-top: 10px; /* Adjust this value according to your needs */
 }
+
+
+
+.message {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.message__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.message__info {
+  display: flex;
+  align-items: center;
+}
+
+.message__avatar {
+  margin-right: 10px;
+}
+
+.message__author-subject {
+  display: flex;
+  flex-direction: column;
+}
+
+.message__author {
+  margin-bottom: 5px;
+}
+
+.message__delete {
+  display: none;
+  text-decoration: none;
+  color: inherit;
+  margin-left: 5px;
+}
+
+.message:hover .message__delete {
+  display: inline-block;
+  color: #d9534f;
+}
+
+
