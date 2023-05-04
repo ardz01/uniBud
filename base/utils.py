@@ -21,7 +21,7 @@ def check_criteria(user, criteria):
     value = int(value)
 
     if key == 'rooms_created':
-        return user.room_set.count() >= value
+        return user.created_rooms.count() >= value
     elif key == 'followers':
         return user.followers.count() >= value
     # Add more criteria checks if needed

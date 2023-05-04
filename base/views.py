@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q, Count
+from django.db.models import Q, Count, Sum
 from django.contrib.auth import authenticate, login, logout
 from .models import Room, Topic, Message, User, UserRoomVote, Notification, Reaction
 from .forms import RoomForm, UserForm, MyUserCreationForm, MessageForm, UpvoteForm
@@ -147,7 +147,7 @@ def room(request, pk):
 @login_required(login_url='login')
 def userProfile(request, pk):
     user = User.objects.get(id=pk)
-    rooms = user.room_set.all()
+    rooms = user.created_rooms.all()
     room_messages = user.message_set.all()
     topics = Topic.objects.all()
     followers_count = user.followers.all().count()
@@ -178,8 +178,14 @@ def userProfile(request, pk):
 
 
 def leaderboard(request):
-    users = User.objects.annotate(room_count=Count('room_host')).order_by('-room_count')
-    context = {'users': users}
+    users = User.objects.annotate(
+        badge_count=Count('badges'),
+        total_upvotes=Sum('created_rooms__upvotes')
+    ).order_by('-badge_count', '-total_upvotes')
+
+    context = {
+        'users': users,
+    }
     return render(request, 'base/leaderboard.html', context)
 
 
