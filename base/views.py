@@ -8,6 +8,7 @@ from .models import Room, Topic, Message, User, UserRoomVote, Notification, Reac
 from .forms import RoomForm, UserForm, MyUserCreationForm, MessageForm, UpvoteForm
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
+from .utils import assign_badges
 
 
 # Create your views here.
@@ -151,6 +152,7 @@ def userProfile(request, pk):
     topics = Topic.objects.all()
     followers_count = user.followers.all().count()
     is_following = user.followers.filter(id=request.user.id).exists()
+    assign_badges(user)
 
     if request.method == 'POST':
         if 'follow' in request.POST:
@@ -175,11 +177,21 @@ def userProfile(request, pk):
     
 
 
+def leaderboard(request):
+    users = User.objects.annotate(room_count=Count('room_host')).order_by('-room_count')
+    context = {'users': users}
+    return render(request, 'base/leaderboard.html', context)
+
+
+
+
+
 
 @login_required(login_url='login')
 def createRoom(request):
     form = RoomForm()
     topics = Topic.objects.all()
+    assign_badges(request.user)
     if request.method == 'POST':
         topic_name = request.POST.get('topic')
         topic, created = Topic.objects.get_or_create(name=topic_name)
@@ -205,6 +217,7 @@ def updateRoom(request, pk):
     room = Room.objects.get(id=pk)
     form = RoomForm(instance=room)
     topics = Topic.objects.all()
+    assign_badges(request.user)
     if request.user != room.host:
         return HttpResponse('Your are not allowed here!!')
 

@@ -45,4 +45,5 @@ urlpatterns = [
     path('join-room/<int:room_pk>/', views.join_room, name='join_room'),
     path('add_reaction/', views.add_reaction, name='add_reaction'),
     
+    path('leaderboard/', views.leaderboard, name='leaderboard'),
 ]

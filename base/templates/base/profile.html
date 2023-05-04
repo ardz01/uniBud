@@ -40,6 +40,18 @@
         {% endif %}
       </div>
         
+      <div class="badges-container">
+        {% for badge in user.badges.all %}
+            <div class="badge">
+                <img src="{% static 'images/badges/badge_5_rooms.png' %}" alt="{{ badge.name }}" title="{{ badge.description }}" />
+            </div>
+        {% empty %}
+            <p>No badges earned yet.</p>
+        {% endfor %}
+    </div>
+    
+
+  
       
         <div class="profile__about">
           <h3>About</h3>

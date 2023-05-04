@@ -15,6 +15,8 @@ class User(AbstractUser):
     followers = models.ManyToManyField('self', related_name='following', blank=True, symmetrical=False)
     follower_count = models.IntegerField(default=0)
     last_checked = models.DateTimeField(auto_now_add=True)
+    
+    badges = models.ManyToManyField('base.Badge', blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -96,3 +98,14 @@ class Reaction(models.Model):
     emoji = models.CharField(max_length=10)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.ForeignKey(Message, on_delete=models.CASCADE)
+
+
+
+class Badge(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+    icon = models.ImageField(upload_to='badges/')
+    criteria = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
