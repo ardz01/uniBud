@@ -931,7 +931,7 @@ a {
 
 .profile__buttons {
   display: flex;
-  gap: 10px; /* adjust the value as needed */
+  gap: 10px; 
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -1272,12 +1272,7 @@ a {
   opacity: 1;
 }
 
-/*.emoji-picker {
-  display: flex;
-  position: absolute;
-  right: 0;
-  top: -20px;
-  /* Adjust the top value according to the size of the emoji picker */
+
 
 .emoji-picker {
   display: flex;
@@ -1308,7 +1303,7 @@ a {
   display: inline-block;
   padding: 2px 4px;
   margin: 2px;
-  background-color: rgba(70, 68, 68, 0.5); /* Light blue with 50% opacity */
+  background-color: rgba(70, 68, 68, 0.5); 
   border-radius: 10px;
 }
 
@@ -1437,7 +1432,7 @@ a {
   flex: 2;
   padding-left: 20px;
   min-height: 400px;
-  height: 400px; /* Set a fixed height according to your needs */
+  height: 400px; 
   overflow-y: auto;
 }
 
@@ -1453,7 +1448,7 @@ a {
   margin-right: 10px;
 }
 .message-view-top {
-  margin-top: 20px; /* Adjust this value according to your needs */
+  margin-top: 20px; 
 }
 
 
@@ -1510,12 +1505,12 @@ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #23272a; /* Change the background color to white */
-  color: #000000; /* Change the text color to black */
+  background-color: #23272a; 
+  color: #000000; 
   padding: 8px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  border-bottom: 1px solid #ccc; /* Add a border at the bottom */
+  border-bottom: 1px solid #ccc; 
 }
 
 .chatbot-body {
@@ -1528,7 +1523,7 @@ background-color: #1e2124;
 
 
 .chatbot-output {
-height: 600px; /* Adjust this value to your preferred height */
+height: 600px; 
 overflow-y: scroll;
 position: relative;
 background-color: #1e2124;
@@ -1630,10 +1625,10 @@ margin-bottom: 10px;
 
 .chatbot-name-status {
   display: flex;
-  flex-direction: row; /* Change from column to row */
-  align-items: center; /* Add alignment for the items */
-  justify-content: space-between; /* Add space between the items */
-  width: 100%; /* Make sure the container takes the full width */
+  flex-direction: row; 
+  align-items: center; 
+  justify-content: space-between; 
+  width: 100%; 
 }
 
 .chatbot-name-status {
@@ -1643,7 +1638,7 @@ margin-bottom: 10px;
 
 .chatbot-status {
   font-size: 12px;
-  color: #888; /* Change the status color to a lighter gray */
+  color: #888; 
 }
 
 .chatbot-close {
@@ -1854,7 +1849,7 @@ opacity: 0;
   padding-top: 20px;
 }
 .messagePage-top {
-margin-top: 10px; /* Adjust this value according to your needs */
+margin-top: 10px; 
 }
 
 
@@ -1906,6 +1901,9 @@ margin-top: 10px; /* Adjust this value according to your needs */
 
 
 
+/*==============================
+=>  Badges/LeaderBoard
+================================*/
 
 
 

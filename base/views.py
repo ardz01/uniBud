@@ -13,15 +13,6 @@ from .utils import assign_badges
 
 # Create your views here.
 
-
-
-#rooms = [
- #   {'id': 1, 'name': 'Lets learn python!'},
-  #  {'id': 2, 'name': 'Design with me!'},
-  #  {'id': 3, 'name': 'Frontend developers'},
-#]
-
-
 def loginPage(request):
     page = 'login'
     if request.user.is_authenticated:
@@ -105,7 +96,7 @@ def access_code(request, pk):
     if request.method == 'POST':
         access_code = request.POST.get('access_code')
         if room.access_code == access_code:
-            room.participants.add(request.user)  # Add this line
+            room.participants.add(request.user)  
             return redirect('room', pk=room.id)
         else:
             return render(request, 'base/access_code.html', {'room': room, 'error': 'Invalid access code'})

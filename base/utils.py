@@ -29,7 +29,7 @@ def check_criteria(user, criteria):
     elif key == 'rooms_joined':
         joined_rooms_count = user.participants.count()
         return joined_rooms_count >= value
-    # Add more criteria checks if needed
+    
 
     return False
 
