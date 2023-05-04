@@ -120,6 +120,7 @@ def access_code(request, pk):
 
 def room(request, pk):
     room = Room.objects.get(id=pk)
+    
 
     if room.is_private and request.user not in room.participants.all():
         return redirect('access_code', pk=room.id)
@@ -128,6 +129,8 @@ def room(request, pk):
     participants = room.participants.all()
     is_admin = request.user in room.admins.all()
     following = request.user.following.all()
+    assign_badges(request.user)
+    
 
     if request.method == 'POST':
         message = Message.objects.create(
@@ -182,11 +185,9 @@ def leaderboard(request):
         badge_count=Count('badges'),
         total_upvotes=Sum('created_rooms__upvotes')
     ).order_by('-badge_count', '-total_upvotes')
-
-    context = {
-        'users': users,
-    }
+    context = {'users': users}
     return render(request, 'base/leaderboard.html', context)
+
 
 
 

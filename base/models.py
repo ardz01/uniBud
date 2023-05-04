@@ -17,6 +17,8 @@ class User(AbstractUser):
     last_checked = models.DateTimeField(auto_now_add=True)
     
     badges = models.ManyToManyField('base.Badge', blank=True)
+    
+
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

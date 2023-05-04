@@ -16,7 +16,6 @@ def assign_badges(user):
 
 
 def check_criteria(user, criteria):
-    # Example criteria: 'rooms_created:10'
     key, value = criteria.split(':')
     value = int(value)
 
@@ -24,6 +23,14 @@ def check_criteria(user, criteria):
         return user.created_rooms.count() >= value
     elif key == 'followers':
         return user.followers.count() >= value
+    elif key == 'upvotes_given':
+        total_upvotes = sum(room.upvotes for room in user.created_rooms.all())
+        return total_upvotes >= value
+    elif key == 'rooms_joined':
+        joined_rooms_count = user.participants.count()
+        return joined_rooms_count >= value
     # Add more criteria checks if needed
 
     return False
+
+

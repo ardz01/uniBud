@@ -39,16 +39,46 @@
         </div>
         {% endif %}
       </div>
-       <h2>Achievements</h2> 
+      <h2>Achievements</h2> 
       <div class="badges-container">
-        {% for badge in user.badges.all %}
-            <div class="badge">
-                <img src="{% static 'images/badges/badge_5_rooms.png' %}" alt="{{ badge.name }}" title="{{ badge.description }}" />
-            </div>
-        {% empty %}
-            <p>No badges earned yet.</p>
-        {% endfor %}
-    </div>
+          {% for badge in user.badges.all %}
+              <div class="badge">
+                  {% if badge.name == '5 Rooms Creator' %}
+                  <img src="{% static 'images/badges/badge_5_rooms.png' %}" alt="{{ badge.name }}" title="{{ badge.description }}" />
+                  {% elif badge.name == '7 Rooms Creator' %}
+                  <img src="{% static 'images/badges/badge_7_rooms.png' %}" alt="{{ badge.name }}" title="{{ badge.description }}" />
+                  {% elif badge.name == '9 Rooms Creator' %}
+                  <img src="{% static 'images/badges/badge_9_rooms.png' %}" alt="{{ badge.name }}" title="{{ badge.description }}" />
+                  {% elif badge.name == '11 Rooms Creator' %}
+                  <img src="{% static 'images/badges/badge_11_rooms.png' %}" alt="{{ badge.name }}" title="{{ badge.description }}" />
+
+                  {% elif badge.name == '5 Joined Rooms' %}
+                  <img src="{% static 'images/badges/badge_5_joins.png' %}" alt="{{ badge.name }}" title="{{ badge.description }}" />
+                  {% elif badge.name == '10 Joined Rooms' %}
+                  <img src="{% static 'images/badges/badge_10_joins.png' %}" alt="{{ badge.name }}" title="{{ badge.description }}" />
+                  {% elif badge.name == '15 Joined Rooms' %}
+                  <img src="{% static 'images/badges/badge_15_joins.png' %}" alt="{{ badge.name }}" title="{{ badge.description }}" />
+                  {% elif badge.name == '20 Joined Rooms' %}
+                  <img src="{% static 'images/badges/badge_20_joins.png' %}" alt="{{ badge.name }}" title="{{ badge.description }}" />
+
+
+                  {% elif badge.name == '10 Rooms Upvotes' %}
+                  <img src="{% static 'images/badges/badge_10_upvotes.png' %}" alt="{{ badge.name }}" title="{{ badge.description }}" />
+                  {% elif badge.name == '20 Rooms Upvotes' %}
+                  <img src="{% static 'images/badges/badge_20_upvotes.png' %}" alt="{{ badge.name }}" title="{{ badge.description }}" />
+                  {% elif badge.name == '50 Rooms Upvotes' %}
+                  <img src="{% static 'images/badges/badge_50_upvotes.png' %}" alt="{{ badge.name }}" title="{{ badge.description }}" />
+                  {% elif badge.name == '100 Rooms Upvotes' %}
+                  <img src="{% static 'images/badges/badge_100_upvotes.png' %}" alt="{{ badge.name }}" title="{{ badge.description }}" />
+
+
+                  {% endif %}
+              </div>
+          {% empty %}
+              <p>No badges earned yet.</p>
+          {% endfor %}
+      </div>
+      
     
 
   
