@@ -109,6 +109,7 @@ def access_code(request, pk):
 
 
 
+@login_required(login_url='login')
 def room(request, pk):
     room = Room.objects.get(id=pk)
     
